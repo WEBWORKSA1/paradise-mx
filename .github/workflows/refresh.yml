@@ -35,9 +35,9 @@ jobs:
       - name: Refresh data and rebuild pages
         run: |
           if [ "${{ inputs.force_normals }}" = "true" ]; then
-            python scripts/update.py --force-normals
+            python -u scripts/update.py --force-normals
           else
-            python scripts/update.py
+            python -u scripts/update.py
           fi
 
       - name: Commit and push changes

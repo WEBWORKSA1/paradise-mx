@@ -150,24 +150,33 @@ def refresh_videos():
 
 
 # ------------------------------------------------------------------ climate normals (monthly)
-def refresh_normals(force=False):
+def refresh_normals(force=False, budget_s=360):
+    """Recompute per-destination climate normals, a few at a time.
+
+    Each destination is refreshed at most every 30 days. Work stops after `budget_s`
+    seconds and the partial result is saved, so the next scheduled run continues where
+    this one stopped and a slow archive service can never block the other refreshes.
+    """
     normals = load("normals.json", {})
-    stamp = normals.get("_computed")
-    if stamp and not force:
-        age = (NOW - dt.datetime.fromisoformat(stamp)).days
-        if age < 30:
-            print(f"normals: fresh ({age} days old), skipping")
-            return
     dests = load("destinations.json", [])
     climate = load("climate.json", {})
-    start, end = f"{NOW.year - 10}-01-01", f"{NOW.year - 1}-12-31"
-    out, ok = {}, 0
+    start, end = f"{NOW.year - 8}-01-01", f"{NOW.year - 1}-12-31"
+    t0, ok, tried = time.time(), 0, 0
+    out = dict(normals)
     for d in dests:
+        prev = normals.get(d["slug"]) or {}
+        at = prev.get("at")
+        if at and not force and (NOW - dt.datetime.fromisoformat(at)).days < 30:
+            continue
+        if time.time() - t0 > budget_s:
+            print("normals: time budget reached; continuing next run")
+            break
+        tried += 1
         url = ("https://archive-api.open-meteo.com/v1/archive?" + urllib.parse.urlencode({
             "latitude": d["lat"], "longitude": d["lon"], "start_date": start, "end_date": end,
             "daily": "temperature_2m_max,precipitation_sum", "timezone": "auto"}))
         try:
-            j = get_json(url, timeout=90)
+            j = get_json(url, timeout=40)
             days, tmax, prcp = j["daily"]["time"], j["daily"]["temperature_2m_max"], j["daily"]["precipitation_sum"]
         except Exception as e:  # noqa: BLE001
             print(f"normals: {d['slug']} failed: {e}", file=sys.stderr)
@@ -179,23 +188,22 @@ def refresh_normals(force=False):
             years.add(t[:4])
             if h is not None:
                 hi_sum[m] += h; hi_n[m] += 1
-            if p is not None and p >= 1.0:
+            if p is not None and p >= 2.5:  # reanalysis drizzle bias: count meaningful rain only
                 wet[m] += 1
         ny = max(1, len(years))
         base = climate["zones"][d["zone"]]
-        hi = [round(hi_sum[m] / hi_n[m]) if hi_n[m] else base["hi"][m] for m in range(12)]
-        # Reanalysis tends to over-count light-rain days in the tropics, so blend with the curated baseline.
+        # Reanalysis grid cells smooth coastal heat and over-count light rain, so each value is
+        # blended 50/50 with the curated zone baseline: local detail without the model bias.
+        hi = [round((hi_sum[m] / hi_n[m] + base["hi"][m]) / 2) if hi_n[m] else base["hi"][m] for m in range(12)]
         rain = [round((wet[m] / ny + base["rain"][m]) / 2) for m in range(12)]
-        out[d["slug"]] = {"hi": hi, "rain": rain}
+        out[d["slug"]] = {"hi": hi, "rain": rain, "at": NOW.isoformat()}
         ok += 1
-        time.sleep(0.6)
-    if ok >= len(dests) * 0.8:
-        out["_computed"] = NOW.isoformat()
+        time.sleep(0.5)
+    if ok:
         out["_source"] = "Open-Meteo historical weather API (ERA5), " + start[:4] + "-" + end[:4]
+        out.pop("_computed", None)
         save("normals.json", out)
-        print(f"normals: recomputed for {ok} destinations")
-    else:
-        print(f"normals: only {ok} succeeded, keeping previous file", file=sys.stderr)
+    print(f"normals: {ok} of {tried} attempted destinations updated")
 
 
 def main():
