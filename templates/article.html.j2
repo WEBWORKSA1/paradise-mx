@@ -1,0 +1,35 @@
+{% extends "base.html.j2" %}
+{% set mcta = true %}
+{% block head %}
+<script type="application/ld+json">{{ {"@context":"https://schema.org","@type":"Article","headline": g.title,"description": g.desc,"dateModified": built_date,"publisher":{"@type":"Organization","name":"Paradise.mx"},"mainEntityOfPage": canonical} | tojson }}</script>
+{% endblock %}
+{% block content %}
+<header class="article-head">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ root }}">Home</a> / <a href="{{ root }}guides/">Guides</a></nav>
+    <h1 style="max-width:22ch">{{ g.title }}</h1>
+    <p class="lede">{{ g.desc }}</p>
+    <p class="small">Paradise.mx editorial team. Reviewed {{ built_date }}.</p>
+  </div>
+</header>
+<div class="wrap layout-2">
+  <article class="prose">
+    {% block toc %}{% endblock %}
+    {% block body %}{% endblock %}
+    <div class="ad-wrap" data-ad></div>
+    <hr class="rule">
+    <p class="small">This guide is general travel information. Rules, prices and conditions change, so confirm details with official sources before you travel. Spotted something out of date? <a href="{{ root }}contact/">Tell us</a>.</p>
+  </article>
+  <aside>
+    <div class="side-cta">
+      <h3>Get a free trip plan</h3>
+      <p>Tell us your month and style; a Mexico specialist sends a personalised shortlist.</p>
+      <a class="btn btn-light" href="{{ root }}plan/">Start planning</a>
+    </div>
+    <div class="mt5">
+      <h3>More guides</h3>
+      <ul class="news">{% for o in guides if o.slug != g.slug %}{% if loop.index <= 5 %}<li><a href="{{ root }}guides/{{ o.slug }}/">{{ o.title }}</a></li>{% endif %}{% endfor %}</ul>
+    </div>
+  </aside>
+</div>
+{% endblock %}

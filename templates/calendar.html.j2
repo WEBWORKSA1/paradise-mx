@@ -1,0 +1,19 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap">
+  <h1>Mexico's seasons and festivals, month by month</h1>
+  <p class="lede">Whale and turtle seasons, festivals, storm and seaweed seasons, and the three best beaches for each month by Paradise score.</p>
+</div></section>
+<section class="band-tight"><div class="wrap">
+  <div class="cal">
+    {% for c in cal %}
+    <section id="{{ c.name|lower }}" {% if c.m == month_now %}style="border-top-color:#C2255C"{% endif %}>
+      <h3>{{ c.name }}{% if c.m == month_now %} (this month){% endif %}</h3>
+      <ul>{% for f in c.fixed %}<li>{{ f }}</li>{% endfor %}{% for e in c.events %}<li>{{ e }}</li>{% endfor %}</ul>
+      <p class="small mt4 mb0">Best beaches: {% for t in c.tops[:3] %}<a href="{{ root }}destinations/{{ t.slug }}/">{{ t.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+    </section>
+    {% endfor %}
+  </div>
+  <p class="small mt6">Festival dates such as Carnival and Holy Week move each year with the calendar; confirm exact dates locally. Wildlife seasons are typical windows, not guarantees.</p>
+</div></section>
+{% endblock %}

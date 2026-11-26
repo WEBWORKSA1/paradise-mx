@@ -1,0 +1,6 @@
+{
+  "base": "USD",
+  "date": "25 Nov 2026",
+  "source": "open.er-api.com",
+  "rates": {"MXN": 19.3755, "CAD": 1.4291, "EUR": 0.9125, "GBP": 0.7633}
+}

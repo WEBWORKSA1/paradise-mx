@@ -1,0 +1,60 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero">
+  <div class="wrap">
+    <h1>Live in paradise: retiring, relocating and buying in Mexico</h1>
+    <p class="lede">Mexico is one of the most popular places in the world for North Americans to live abroad. Here's the practical groundwork, followed by a free request for help from vetted local specialists.</p>
+  </div>
+</section>
+<div class="wrap layout-2 band-tight">
+  <article class="prose">
+    <nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#stay">How long you can stay</a></li><li><a href="#residency">Residency, in brief</a></li><li><a href="#buy">Buying property near the coast</a></li><li><a href="#health">Healthcare</a></li><li><a href="#where">Where people settle</a></li><li><a href="#mistakes">Expensive mistakes to avoid</a></li></ol></nav>
+    <h2 id="stay">How long you can stay as a visitor</h2>
+    <p>Citizens of the United States, Canada, the United Kingdom and the EU don't need a visa for tourism. On arrival, the immigration officer decides how many days you're granted, up to a maximum of 180. That number is printed or recorded on your entry, so check it. Tourist status doesn't allow you to work for a Mexican employer, and repeated back-to-back "visa runs" can draw questions at the border.</p>
+    <h2 id="residency">Residency, in brief</h2>
+    <p>To live in Mexico longer, most people apply for <b>temporary residency</b> (valid for one to four years) or, if they qualify, <b>permanent residency</b>. The usual route starts at a Mexican consulate in your home country, where you show proof of economic solvency: either a monthly income or a savings balance above thresholds that are tied to Mexico's minimum wage and change every year. Once approved, you enter Mexico and complete the process at the immigration institute (INM) within 30 days.</p>
+    <p>Consulates apply the rules differently, so check the current requirements with the consulate you'll use. Family ties, retirement income and job offers can open other routes.</p>
+    <h2 id="buy">Buying property near the coast</h2>
+    <p>Foreigners can own property in Mexico. Within the <b>restricted zone</b>, which covers land within 50 kilometres of the coast and 100 kilometres of the borders, residential property is held through a <b>fideicomiso</b>, a bank trust in which you are the beneficiary with full rights to use, rent, sell and pass on the property. Commercial property can be held through a Mexican company.</p>
+    <p>Every sale is formalised by a <b>notario público</b>, a senior lawyer appointed by the state who verifies title and registers the deed. Budget for closing costs and the municipal acquisition tax on top of the price; together they are commonly a mid-single-digit percentage of the purchase price. Annual property tax (predial) is generally far lower than in the US or Canada.</p>
+    <div class="callout"><p><b>Avoid ejido land</b> unless it has been fully converted to private ownership. Communal land can't be sold to foreigners directly, and deals that skip this step have cost buyers their homes.</p></div>
+    <h2 id="health">Healthcare</h2>
+    <p>Large coastal hubs such as Cancún, Playa del Carmen, Mérida, Puerto Vallarta and Los Cabos have private hospitals with English-speaking staff. Residents can enrol voluntarily in the public IMSS system, and many expats combine it with private insurance. Smaller beach villages may be an hour or more from a full hospital, which matters more with age.</p>
+    <h2 id="where">Where people settle</h2>
+    <p>Each destination page shows climate by month, so you can see what July really feels like before you commit. Popular bases include:</p>
+    <ul>
+      {% for s in ["merida","puerto-vallarta","bucerias","san-miguel-de-allende","la-paz","playa-del-carmen","todos-santos","loreto"] %}{% set d = by_slug[s] %}<li><a href="{{ root }}destinations/{{ d.slug }}/">{{ d.name }}</a>: {{ d.tagline }}</li>{% endfor %}
+    </ul>
+    <h2 id="mistakes">Expensive mistakes to avoid</h2>
+    <ul>
+      <li>Buying before renting for at least one hot, humid summer.</li>
+      <li>Skipping an independent lawyer because the developer "has one".</li>
+      <li>Paying deposits in cash or to personal accounts.</li>
+      <li>Assuming rental income is guaranteed; occupancy swings with seasons, flights and sargassum.</li>
+      <li>Forgetting Mexican tax obligations on rental income and on a future sale.</li>
+    </ul>
+    <p class="small">This page is general information, not legal, tax or immigration advice. Rules change; confirm with a licensed professional and the relevant Mexican authority.</p>
+  </article>
+  <aside>
+    <div class="panel panel-shadow">
+      <h3>Get help moving or buying</h3>
+      <p class="small">We connect you with vetted relocation consultants, immigration facilitators and real-estate professionals.</p>
+      <form class="form" data-form="live-lead" data-subject="Paradise.mx LEAD (live/invest) - {interest} - {area} - {timeline} - {budget}" data-ok="Thanks. A relocation or property specialist will reply within two business days." novalidate>
+        <fieldset class="field"><legend>I'm interested in</legend><div class="opts">{% for o in ["Retiring","Relocating","Buying property","Long-term rental","Investing"] %}<label class="opt"><input type="radio" name="interest" value="{{ o }}"{% if loop.first %} required checked{% endif %}><span>{{ o }}</span></label>{% endfor %}</div></fieldset>
+        <div class="field"><label for="v-area">Area</label><select id="v-area" name="area"><option>Not sure yet</option><option>Mérida and Yucatán</option><option>Cancún to Tulum</option><option>Puerto Vallarta and Nayarit</option><option>Los Cabos, La Paz, Todos Santos</option><option>San Miguel de Allende</option><option>Oaxaca</option><option>Mexico City</option></select></div>
+        <div class="row">
+          <div class="field"><label for="v-time">Timeline</label><select id="v-time" name="timeline"><option>Within 6 months</option><option>6-12 months</option><option>1-2 years</option><option>Just researching</option></select></div>
+          <div class="field"><label for="v-budget">Budget</label><select id="v-budget" name="budget"><option>Renting only</option><option>Under US$250k</option><option>US$250k-500k</option><option>US$500k-1M</option><option>US$1M+</option></select></div>
+        </div>
+        <div class="field"><label for="v-name">Name</label><input id="v-name" type="text" name="name" required></div>
+        <div class="field"><label for="v-email">Email</label><input id="v-email" type="email" name="email" required></div>
+        <div class="field"><label for="v-phone">Phone or WhatsApp (optional)</label><input id="v-phone" type="tel" name="phone"></div>
+        <div class="field"><label for="v-notes">Questions (optional)</label><textarea id="v-notes" name="notes"></textarea></div>
+        <label class="consent"><input type="checkbox" name="consent" value="yes" required> Share my request with up to three vetted specialists.</label>
+        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-primary" type="submit">Send my request</button>
+      </form>
+    </div>
+  </aside>
+</div>
+{% endblock %}

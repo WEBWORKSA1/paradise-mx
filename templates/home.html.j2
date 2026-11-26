@@ -1,0 +1,151 @@
+{% extends "base.html.j2" %}
+{% set mcta = true %}
+{% block content %}
+<section class="finder" id="finder" aria-labelledby="finder-h">
+  <div class="wrap">
+    <h1 id="finder-h">Where is Mexico paradise this month?</h1>
+    <p class="lede">Pick the month you can travel. We rank 38 beaches, islands and paradise towns by heat, rain, sea temperature, storm season and sargassum, and tell you why.</p>
+    <fieldset class="months">
+      <legend>Travel month</legend>
+      {% for m in MONTHS %}<label class="month"><input type="radio" name="fm" value="{{ loop.index0 }}"{% if loop.index0 == month_now %} checked{% endif %}><span>{{ m }}<i></i></span></label>{% endfor %}
+    </fieldset>
+    <div class="filters">
+      <div class="seg" role="radiogroup" aria-label="Trip type">
+        <label><input type="radio" name="fk" value="beach" checked><span>Beaches and islands</span></label>
+        <label><input type="radio" name="fk" value="culture"><span>Towns and culture</span></label>
+        <label><input type="radio" name="fk" value="all"><span>Everything</span></label>
+      </div>
+      <div class="chips" role="group" aria-label="Regions">
+        {% for r in REGIONS %}<label class="chip"><input type="checkbox" name="fr" value="{{ r }}"><span>{{ REGION_LABEL[r] }}</span></label>{% endfor %}
+      </div>
+    </div>
+    <ol class="rank" id="rank" aria-live="polite">
+      {% for d in picks_now %}
+      <li data-slug="{{ d.slug }}"><span class="n">{{ loop.index }}</span>
+        <a class="pc" href="{{ root }}destinations/{{ d.slug }}/" tabindex="-1" aria-hidden="true"><img src="{{ root }}assets/img/postcards/{{ d.slug }}.svg" alt="" width="64" height="48"></a>
+        <div class="t"><h3><a href="{{ root }}destinations/{{ d.slug }}/">{{ d.name }}</a></h3><div class="where">{{ d.state }} · fly into {{ d.airport }}</div></div>
+        <div class="facts"><span>High <b>{{ d.md[month_now].hi }}°C</b></span>{% if d.md[month_now].sea is not none %}<span>Water <b>{{ d.md[month_now].sea }}°C</b></span>{% endif %}<span>Rainy days <b>{{ d.md[month_now].rain }}</b></span></div>
+        <div class="score"><span class="bar"><i style="width:{{ d.scores[month_now] }}%"></i></span><b>{{ d.scores[month_now] }}</b></div>
+      </li>
+      {% endfor %}
+    </ol>
+    <div class="finder-foot">
+      <p class="small mb0" id="rank-count">Ranked for {{ MONTHS_LONG[month_now] }}.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-quiet" href="{{ root }}best-time/">See all 12 months</a><a class="btn btn-primary" id="finder-plan" href="{{ root }}plan/">Plan a trip to the top pick</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="band-tight">
+  <div class="wrap">
+    <div class="head-row"><h2>Right now in paradise</h2><p class="small">Live temperatures from Open-Meteo. Peso rate: {{ fx.date or "latest" }}.</p></div>
+    <div class="live" id="live-strip">
+      {% for s in ["cancun","tulum","los-cabos","puerto-vallarta"] %}{% set d = by_slug[s] %}
+      <div data-lat="{{ d.lat }}" data-lon="{{ d.lon }}"><div class="k">{{ d.name }}</div><div class="v">{{ d.md[month_now].hi }}°C <small>typical high</small></div></div>
+      {% endfor %}
+      <div><div class="k">US$1 buys</div><div class="v">MX$<span data-fx="USD">{{ '%.2f'|format(fx.rates.MXN) if fx.rates else '–' }}</span></div></div>
+      <div><div class="k">C$1 buys</div><div class="v">MX$<span data-fx="CAD">{{ '%.2f'|format(fx.rates.MXN / fx.rates.CAD) if fx.rates else '–' }}</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-agua">
+  <div class="wrap">
+    <div class="head-row"><h2>Find your kind of paradise</h2><a class="btn btn-quiet btn-small" href="{{ root }}destinations/">Explore all 38</a></div>
+    <div class="cards">
+      {% for s in ["isla-mujeres","bacalar","holbox","la-paz","huatulco","sayulita","cozumel","valladolid"] %}{% set d = by_slug[s] %}
+      <a class="card" href="{{ root }}destinations/{{ d.slug }}/"><div class="art"><img src="{{ root }}assets/img/postcards/{{ d.slug }}.svg" alt="" loading="lazy" width="400" height="300"></div>
+        <h3>{{ d.name }}</h3><p>{{ d.tagline }}</p><div class="meta"><span>Best {{ d.best_text }}</span></div></a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap split">
+    <div>
+      <h2>Tell us the dream. Get a plan back.</h2>
+      <p class="lede">Answer a few questions about where, when and how you travel. A vetted Mexico travel specialist sends you a personalised shortlist of stays, timings and ideas. Free, and you're never obliged to book.</p>
+      <ol class="steps">
+        <li><b>Pick your month and coast</b><br><span class="muted">Or let the Paradise score choose for you.</span></li>
+        <li><b>Share your style and budget</b><br><span class="muted">All-inclusive, boutique, villa or eco-lodge.</span></li>
+        <li><b>Get your shortlist</b><br><span class="muted">Usually within 48 hours, by email or WhatsApp.</span></li>
+      </ol>
+      <a class="btn btn-primary" href="{{ root }}plan/">Start my free trip plan</a>
+    </div>
+    <div class="panel panel-shadow">
+      <h3>Quick request</h3>
+      <form class="form" data-form="quick-lead" data-subject="Paradise.mx LEAD (quick) - {destination} - {month} - {travellers} travellers" data-ok="Got it. A specialist will email your shortlist within 48 hours." novalidate>
+        <div class="field"><label for="q-dest">Where</label><select id="q-dest" name="destination" data-prefill="dest"><option value="Not sure - recommend">Not sure yet, recommend one</option>{% for d in dests %}<option value="{{ d.name }}">{{ d.name }}</option>{% endfor %}</select></div>
+        <div class="row">
+          <div class="field"><label for="q-month">When</label><select id="q-month" name="month" data-prefill="month">{% for m in MONTHS_LONG %}<option value="{{ m }}">{{ m }}</option>{% endfor %}<option value="Flexible">Flexible</option></select></div>
+          <div class="field"><label for="q-trav">Travellers</label><input id="q-trav" type="number" name="travellers" min="1" max="200" value="2" required></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="q-name">Name</label><input id="q-name" type="text" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="q-email">Email</label><input id="q-email" type="email" name="email" autocomplete="email" required></div>
+        </div>
+        <label class="consent"><input type="checkbox" name="consent" value="yes" required> I agree that Paradise.mx may share this request with up to three vetted travel partners so they can prepare my shortlist.</label>
+        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-primary" type="submit">Send my request</button>
+      </form>
+      <div class="trust"><span>Free</span><span>No obligation</span><span>Reply within 48 hours</span></div>
+    </div>
+  </div>
+</section>
+
+{% if videos['items'] %}
+<section class="band band-agua">
+  <div class="wrap">
+    <div class="head-row"><h2>Watch before you go</h2><a class="btn btn-quiet btn-small" href="{{ root }}videos/">All videos</a></div>
+    <div class="vids">
+      {% for v in videos['items'][:3] %}
+      <div><div class="yt" data-id="{{ v.id }}" data-title="{{ v.title }}"><img src="https://i.ytimg.com/vi/{{ v.id }}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"><button aria-label="Play video: {{ v.title }}"></button></div>
+        <div class="vid-cap">{{ v.title }}<small>{{ v.channel or "YouTube" }}{% if v.dest %} · {{ by_slug[v.dest].name }}{% endif %}</small></div></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="band">
+  <div class="wrap grid-2">
+    <div>
+      <div class="head-row"><h2>Guides worth reading</h2></div>
+      <div class="guides" style="grid-template-columns:1fr">
+        {% for g in guides[:5] %}<article class="guide"><h3><a href="{{ root }}guides/{{ g.slug }}/">{{ g.title }}</a></h3><p>{{ g.desc }}</p></article>{% endfor %}
+      </div>
+      <p class="mt5"><a href="{{ root }}guides/">All guides</a></p>
+    </div>
+    <div>
+      <div class="head-row"><h2>Travel news</h2></div>
+      {% if news['items'] %}
+      <ul class="news">{% for n in news['items'][:7] %}<li><a href="{{ n.link }}" rel="noopener nofollow" target="_blank">{{ n.title }}</a><div class="src">{{ n.source }}{% if n.date %} · {{ n.date }}{% endif %}</div></li>{% endfor %}</ul>
+      <p class="mt5"><a href="{{ root }}news/">More headlines</a></p>
+      {% else %}<p class="empty">Headlines refresh every six hours.</p>{% endif %}
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="ad-wrap" data-ad></div></div>
+
+<section class="band-tight">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2>Keep Paradise.mx free and independent</h2>
+        <p>No paid rankings, ever. Supporters fund the research, the monthly photo contest prizes and local writers across Mexico.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-light" href="{{ root }}support/">Support us</a><a class="btn btn-light" href="{{ root }}contests/">Enter the photo contest</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap grid-3">
+    <div><h3>Getting married in Mexico?</h3><p class="muted">Compare beaches by season, guest flights and legal requirements, then get free planning help.</p><a href="{{ root }}weddings/">Weddings and honeymoons</a></div>
+    <div><h3>Thinking of living here?</h3><p class="muted">Residency basics, buying in the coastal zone and real monthly costs, plus help from vetted locals.</p><a href="{{ root }}live/">Live in Mexico</a></div>
+    <div><h3>Run a hotel, tour or venue?</h3><p class="muted">Reach travellers at the moment they choose where to go, with clearly labelled sponsorships.</p><a href="{{ root }}advertise/">Advertise and partner</a></div>
+  </div>
+</section>
+{% endblock %}

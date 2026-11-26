@@ -1,0 +1,13 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap">
+  <h1>Compare destinations month by month</h1>
+  <p class="lede">Pick up to three places. Each month shows the Paradise score, the typical high, the water temperature and the number of rainy days; the winner in each month is ringed.</p>
+  <form class="filters mt5" id="compare" onsubmit="return false">
+    <div class="field"><label for="c1">First</label><select id="c1"></select></div>
+    <div class="field"><label for="c2">Second</label><select id="c2"></select></div>
+    <div class="field"><label for="c3">Third</label><select id="c3"></select></div>
+  </form>
+</div></section>
+<section class="band-tight"><div class="wrap"><div id="compare-out"></div></div></section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap narrow">
+  <h1>Mexico travel news</h1>
+  <p class="lede">Headlines that matter to travellers heading to Mexico's beaches: flights, fees, rules, weather and new openings. Collected automatically from news sources and refreshed every six hours.</p>
+</div></section>
+<section class="band-tight"><div class="wrap narrow">
+  {% if news['items'] %}
+  <ul class="news">
+    {% for n in news['items'] %}<li><a href="{{ n.link }}" rel="noopener nofollow" target="_blank">{{ n.title }}</a><div class="src">{{ n.source }}{% if n.date %} · {{ n.date }}{% endif %}</div></li>
+    {% if loop.index == 10 %}</ul><div class="ad-wrap" data-ad></div><ul class="news">{% endif %}{% endfor %}
+  </ul>
+  {% else %}<p class="empty">Headlines are refreshing. Check back shortly.</p>{% endif %}
+  <p class="small mt6">Headlines link to the original publishers, who own their content. Paradise.mx shows only the headline and source. Last refreshed {{ news.updated or built }}.</p>
+</div></section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap">
+  <h1>Work with Paradise.mx</h1>
+  <p class="lede">We're building the most useful guide to Mexico's beaches and paradise towns, with people who live there. All roles are remote and flexible, and we especially welcome applicants based in Mexico.</p>
+</div></section>
+<section class="band-tight"><div class="wrap split">
+  <div>
+    {% set roles = [
+      ("Destination correspondent", "Freelance, paid per article", "Write and update destination pages and guides from first-hand knowledge. Spanish and English preferred."),
+      ("Video creator", "Freelance, paid per video", "Short, practical video guides to beaches, cenotes, towns and seasons. Your channel, credited."),
+      ("Travel advisor partner", "Commission-based", "Turn trip, wedding and honeymoon requests into great itineraries. Must be accredited or work with a host agency."),
+      ("Relocation and property partner", "Referral-based", "Licensed professionals in immigration facilitation, real estate or law in our main destinations."),
+      ("Partnerships and ad sales", "Commission-based", "Sign hotels, tour operators and wedding venues as clearly labelled sponsors."),
+      ("Social media and community lead", "Part-time", "Run Paradise Lens, our social channels and the monthly email."),
+      ("Translator", "Freelance", "Spanish, French and Portuguese translation and localisation of guides and tools.")
+    ] %}
+    {% for r in roles %}
+    <div class="guide" style="margin-bottom:24px"><h3>{{ r[0] }}</h3><p class="small mb0"><b>{{ r[1] }}</b></p><p class="muted">{{ r[2] }}</p></div>
+    {% endfor %}
+  </div>
+  <div class="panel panel-shadow" style="position:sticky;top:90px">
+    <h2 style="font-size:1.5rem">Apply</h2>
+    <form class="form" data-form="job-application" data-subject="Paradise.mx APPLICATION - {role} - {name} - {location}" data-ok="Thanks for applying. We review applications weekly and reply to every shortlisted candidate." novalidate>
+      <div class="field"><label for="j-role">Role</label><select id="j-role" name="role">{% for r in roles %}<option>{{ r[0] }}</option>{% endfor %}<option>Something else</option></select></div>
+      <div class="row">
+        <div class="field"><label for="j-name">Name</label><input id="j-name" type="text" name="name" required></div>
+        <div class="field"><label for="j-email">Email</label><input id="j-email" type="email" name="email" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="j-loc">Where you're based</label><input id="j-loc" type="text" name="location" required></div>
+        <div class="field"><label for="j-lang">Languages</label><input id="j-lang" type="text" name="languages" placeholder="Spanish, English"></div>
+      </div>
+      <div class="field"><label for="j-port">Portfolio, LinkedIn or channel link</label><input id="j-port" type="url" name="portfolio" placeholder="https://" required></div>
+      <div class="field"><label for="j-msg">Why you? (a few lines)</label><textarea id="j-msg" name="message" required></textarea></div>
+      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-primary" type="submit">Send application</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

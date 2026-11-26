@@ -1,0 +1,4 @@
+{
+  "_note": "Optional. Add YouTube channels whose latest Mexico uploads should appear automatically. channel_id starts with UC. must_include filters titles (any keyword). dest links a video to a destination slug.",
+  "channels": []
+}

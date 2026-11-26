@@ -1,0 +1,15 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap">
+  <h1>Mexico travel guides</h1>
+  <p class="lede">Original, practical guides written to answer the questions travellers actually ask before booking. Reviewed regularly; dates on each page.</p>
+</div></section>
+<section class="band-tight"><div class="wrap">
+  <div class="guides">{% for g in guides %}<article class="guide"><h3><a href="{{ root }}guides/{{ g.slug }}/">{{ g.title }}</a></h3><p>{{ g.desc }}</p></article>{% endfor %}</div>
+</div></section>
+<section class="band band-agua"><div class="wrap">
+  <h2>Destination guides</h2>
+  <p class="lede">Each of our 38 destination pages has a month-by-month climate table, where to stay, live weather and local tips.</p>
+  <div class="grid-3 mt5">{% for r in REGIONS %}<div><h3>{{ REGION_LABEL[r] }}</h3><ul class="tick">{% for d in dests if d.region == r %}<li><a href="{{ root }}destinations/{{ d.slug }}/">{{ d.name }}</a></li>{% endfor %}</ul></div>{% endfor %}</div>
+</div></section>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "article.html.j2" %}
+{% block toc %}<nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#short">The short answer</a></li><li><a href="#seasons">Mexico's two real seasons</a></li><li><a href="#coasts">Coast by coast</a></li><li><a href="#months">Top picks for every month</a></li><li><a href="#price">When it's cheapest</a></li><li><a href="#holidays">Dates that fill up</a></li></ol></nav>{% endblock %}
+{% block body %}
+<h2 id="short">The short answer</h2>
+<p>For most of Mexico's beaches, the best time to go is <b>from December to April</b>: dry, sunny, warm rather than sweltering, and outside both hurricane season and the worst of the Caribbean's seaweed months. If you want lower prices and don't mind afternoon storms, <b>November and early May</b> are the sweet spots. The real question isn't "when is Mexico good" but "which part of Mexico is best in the month I can actually travel", because the country's coasts run on different calendars.</p>
+
+<h2 id="seasons">Mexico's two real seasons</h2>
+<p>Forget spring, summer, autumn and winter. In Mexico's tropics there is a <b>dry season</b>, roughly November to May, and a <b>rainy season</b>, roughly June to October. Rainy season rarely means all-day rain. It usually brings a clear, hot morning, a heavy storm in the afternoon or evening, and a fresh, green landscape. Hotel prices fall, waterfalls and rivers fill, and crowds thin out.</p>
+<p>Layered on top are two hazards that the Paradise score weighs separately:</p>
+<ul>
+<li><b>Hurricane season</b> runs from 1 June to 30 November in the Atlantic (the Caribbean and Gulf coasts) and from 15 May to 30 November in the eastern Pacific. The risk on any given week is low, but it peaks from late August to early October.</li>
+<li><b>Sargassum</b>, a floating seaweed, affects the Caribbean coast mostly from spring to late summer. It's unpredictable from year to year and beach to beach, and it never reaches the Pacific. See our <a href="{{ root }}guides/sargassum-season-guide/">sargassum guide</a>.</li>
+</ul>
+
+<h2 id="coasts">Coast by coast</h2>
+<h3>Mexican Caribbean: Cancún, Riviera Maya, Tulum, islands</h3>
+<p>The water stays between about 26°C and 29°C all year, so swimming is always pleasant. The best stretch is <b>December to April</b>: low humidity, little rain and generally clean beaches. May is hot and still mostly dry but sargassum often starts. June to October brings humidity, storms and the highest seaweed risk, offset by whale sharks off Holbox and Isla Mujeres from June to September and sea turtles nesting from May.</p>
+<h3>Pacific: Puerto Vallarta, Riviera Nayarit, Oaxaca coast</h3>
+<p>The Pacific is the most reliably dry winter coast in Mexico. <b>November to May</b> is close to rain-free, and humpback whales calve in Banderas Bay and off Oaxaca from December to March. Water is a little cooler in February and March (around 24°C in Banderas Bay) and warms to 30°C by late summer. July to September is genuinely wet and steamy, with the year's best surf on the Oaxaca coast.</p>
+<h3>Baja California Sur and the Sea of Cortez</h3>
+<p>Los Cabos and La Paz sit in a desert: almost no rain for most of the year. Winter days are perfect for exploring at around 24-27°C, though the sea is cooler (around 20-23°C). That's whale season: gray whales in the lagoons, humpbacks off Cabo, blue whales off Loreto. <b>From May to July</b> the water warms quickly while rain stays rare, a window many people miss. Late summer is very hot and is when tropical storms are most likely.</p>
+<h3>Yucatán and the highlands</h3>
+<p>Inland Yucatán (Mérida, Valladolid) is best from <b>November to February</b>; April and May are the hottest months, often above 36°C. The highland cities (Mexico City, Oaxaca, San Miguel de Allende) are spring-like most of the year thanks to altitude. Their dry season, <b>October to April</b>, is ideal; summer brings regular afternoon showers.</p>
+
+<h2 id="months">Top picks for every month</h2>
+<p>These are the three highest-scoring beach and island destinations for each month, calculated from the same data that powers the <a href="{{ root }}best-time/">best-time matrix</a>.</p>
+<div class="table-scroll"><table class="clim">
+<thead><tr><th>Month</th><th>First</th><th>Second</th><th>Third</th></tr></thead>
+<tbody>
+{% for m in range(12) %}{% set top = (dests|selectattr('beachy')|sort(attribute='scores.' ~ m, reverse=true)|list)[:3] %}
+<tr><td>{{ MONTHS_LONG[m] }}</td>{% for t in top %}<td style="text-align:left"><a href="{{ root }}destinations/{{ t.slug }}/">{{ t.name }}</a> <span class="small">{{ t.scores[m] }}</span></td>{% endfor %}</tr>
+{% endfor %}
+</tbody></table></div>
+
+<h2 id="price">When it's cheapest</h2>
+<p>Prices follow demand from the US and Canada. The most expensive weeks are Christmas to New Year, Presidents' Day weekend, spring break in March and Easter. The cheapest periods are <b>late August to early November</b> (minus the Mexican national holiday around 16 September) and the two or three weeks after Easter. A good compromise for value and weather is the <b>first half of December</b> or <b>late April to mid-May</b> on the Pacific.</p>
+
+<h2 id="holidays">Dates that fill up</h2>
+<ul>
+<li><b>Semana Santa (Holy Week)</b>, in March or April, is Mexico's biggest domestic holiday. Beaches near big cities get very busy.</li>
+<li><b>Day of the Dead</b>, 31 October to 2 November, fills hotels in Oaxaca, Mexico City, Mérida and the colonial towns.</li>
+<li><b>Guelaguetza</b> in July and the <b>Cervantino</b> in October book out Oaxaca and Guanajuato.</li>
+<li><b>Spring equinox</b> around 20-21 March draws large crowds to Chichén Itzá.</li>
+</ul>
+<p>Want a recommendation for your exact dates? <a href="{{ root }}plan/">Ask our specialists</a> and we'll match the month to the right coast.</p>
+{% endblock %}

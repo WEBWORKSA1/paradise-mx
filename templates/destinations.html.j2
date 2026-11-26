@@ -1,0 +1,36 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero">
+  <div class="wrap">
+    <h1>38 places in Mexico that feel like paradise</h1>
+    <p class="lede">Filter by month, region, vibe and budget. Every destination is sorted by its Paradise score for the month you choose, so the top of the list is where conditions are best.</p>
+    <form class="filters mt5" id="explorer" onsubmit="return false">
+      <div class="field"><label for="ex-month">Month</label><select id="ex-month">{% for m in MONTHS_LONG %}<option value="{{ loop.index0 }}">{{ m }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="ex-region">Region</label><select id="ex-region"><option value="">All regions</option>{% for r in REGIONS %}<option value="{{ r }}">{{ REGION_LABEL[r] }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="ex-vibe">Vibe</label><select id="ex-vibe"><option value="">Any vibe</option>{% for v in VIBES %}<option value="{{ v }}">{{ v|capitalize }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="ex-budget">Budget</label><select id="ex-budget"><option value="">Any budget</option><option value="1">$ only</option><option value="2">Up to $$</option><option value="3">Up to $$$</option></select></div>
+      <div class="field" style="flex:1;min-width:200px"><label for="ex-q">Search</label><input id="ex-q" type="text" placeholder="Name, state or vibe"></div>
+    </form>
+  </div>
+</section>
+<section class="band-tight">
+  <div class="wrap">
+    <p class="small" id="ex-count" aria-live="polite"></p>
+    <div class="cards" id="ex-out">
+      {% for d in dests|sort(attribute='name') %}
+      <a class="card" href="{{ root }}destinations/{{ d.slug }}/"><div class="art"><img src="{{ root }}assets/img/postcards/{{ d.slug }}.svg" alt="" loading="lazy" width="400" height="300"></div><h3>{{ d.name }}</h3><p>{{ d.tagline }}</p></a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<section class="band band-agua">
+  <div class="wrap">
+    <h2>Browse by region</h2>
+    <div class="grid-3 mt5">
+      {% for r in REGIONS %}
+      <div><h3>{{ REGION_LABEL[r] }}</h3><ul class="tick">{% for d in dests if d.region == r %}<li><a href="{{ root }}destinations/{{ d.slug }}/">{{ d.name }}</a> <span class="small">best {{ d.best_text }}</span></li>{% endfor %}</ul></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

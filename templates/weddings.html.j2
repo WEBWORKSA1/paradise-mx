@@ -1,0 +1,66 @@
+{% extends "base.html.j2" %}
+{% set mcta = "?occasion=Wedding" %}
+{% block content %}
+<section class="dest-hero">
+  <div class="wrap split">
+    <div>
+      <h1>Destination weddings and honeymoons in Mexico</h1>
+      <p class="lede">Mexico is one of the most popular destination-wedding countries for North American couples, for good reasons: short flights, dry winters, beaches on two oceans and resorts that handle the details.</p>
+      <h2 class="mt6">Choose your coast and season</h2>
+      <div class="prose">
+        <p><b>Caribbean (Cancún, Riviera Maya, Isla Mujeres).</b> The most flights and the most wedding-ready resorts. Morning ceremonies glow with sunrise light; the sun sets over the land, not the sea. Best from December to April, before sargassum and storm season.</p>
+        <p><b>Pacific (Puerto Vallarta, Punta Mita, Sayulita).</b> Sunsets over the ocean, jungle hills and humpback whales in winter. November to May is reliably dry.</p>
+        <p><b>Los Cabos.</b> Dramatic desert-meets-sea scenery and luxury venues. Almost no rain from November to June; many beaches are too rough to swim, so pick a resort on a swimmable bay.</p>
+        <p><b>Colonial towns (San Miguel de Allende, Mérida, Oaxaca).</b> Candle-lit courtyards, mariachis and haciendas. Ideal for guests who want culture as well as beach time.</p>
+      </div>
+      <h2 class="mt6">Legal or symbolic?</h2>
+      <div class="prose">
+        <p>Most foreign couples marry legally at home and hold a <b>symbolic ceremony</b> in Mexico. It needs no paperwork and gives you complete freedom on venue and timing.</p>
+        <p>A <b>legal civil ceremony</b> in Mexico is possible but involves more steps, and they vary by state. Typically you need passports, birth certificates with an apostille and a certified Spanish translation, witnesses, and sometimes medical tests, all arranged through the local civil registry several working days before the date. A planner experienced in your chosen state is worth it.</p>
+        <p><b>Religious ceremonies</b> require approval from the parish or your own faith community, often months ahead.</p>
+      </div>
+      <h2 class="mt6">Guest logistics that make or break it</h2>
+      <ul class="tick">
+        <li>Pick an airport with nonstop flights from where most guests live: Cancún, Los Cabos and Puerto Vallarta lead.</li>
+        <li>Ask for a group room block with a courtesy-room or ceremony credit; many resorts include a basic package once you book a minimum number of rooms.</li>
+        <li>Send save-the-dates 9-12 months out for winter dates, when rooms sell out.</li>
+        <li>Avoid peak hurricane months (August to October) unless everyone is insured and flexible.</li>
+      </ul>
+    </div>
+    <div class="panel panel-shadow" style="position:sticky;top:90px">
+      <h2 style="font-size:1.5rem">Get free wedding planning help</h2>
+      <p class="small">Tell us the basics; a destination-wedding specialist replies with venues, prices and dates that fit.</p>
+      <form class="form" data-form="wedding-lead" data-subject="Paradise.mx LEAD (wedding) - {wedding_type} - {season} - {guests} - {destination}" data-ok="Congratulations! A wedding specialist will reply within 48 hours with venue ideas and availability." novalidate>
+        <div class="row">
+          <div class="field"><label for="w-name">Your names</label><input id="w-name" type="text" name="name" required></div>
+          <div class="field"><label for="w-email">Email</label><input id="w-email" type="email" name="email" required></div>
+        </div>
+        <div class="field"><label for="w-phone">Phone or WhatsApp (optional)</label><input id="w-phone" type="tel" name="phone"></div>
+        <fieldset class="field"><legend>What are you planning?</legend><div class="opts">{% for o in ["Wedding","Honeymoon","Vow renewal","Elopement","Proposal"] %}<label class="opt"><input type="radio" name="wedding_type" value="{{ o }}"{% if loop.first %} required checked{% endif %}><span>{{ o }}</span></label>{% endfor %}</div></fieldset>
+        <div class="row">
+          <div class="field"><label for="w-season">Season</label><select id="w-season" name="season"><option>Winter 2026-27</option><option>Spring 2027</option><option>Summer 2027</option><option>Fall 2027</option><option>Winter 2027-28</option><option>2028 or later</option><option>Not sure yet</option></select></div>
+          <div class="field"><label for="w-guests">Guests</label><select id="w-guests" name="guests"><option>Just the two of us</option><option>Under 20</option><option selected>20-50</option><option>50-100</option><option>100+</option></select></div>
+        </div>
+        <div class="field"><label for="w-dest">Destination preference</label><select id="w-dest" name="destination"><option>Not sure - recommend</option><option>Cancún or Riviera Maya</option><option>Tulum</option><option>Isla Mujeres or Holbox</option><option>Puerto Vallarta or Riviera Nayarit</option><option>Los Cabos</option><option>Colonial town (San Miguel, Mérida, Oaxaca)</option></select></div>
+        <div class="field"><label for="w-budget">Total budget</label><select id="w-budget" name="budget"><option>Under US$10,000</option><option selected>US$10,000-25,000</option><option>US$25,000-50,000</option><option>US$50,000-100,000</option><option>US$100,000+</option></select></div>
+        <fieldset class="field"><legend>Ceremony</legend><div class="opts"><label class="opt"><input type="radio" name="ceremony" value="Symbolic" checked><span>Symbolic</span></label><label class="opt"><input type="radio" name="ceremony" value="Legal civil"><span>Legal civil</span></label><label class="opt"><input type="radio" name="ceremony" value="Religious"><span>Religious</span></label></div></fieldset>
+        <fieldset class="field"><legend>Help with</legend><div class="opts">{% for o in ["Venue","Room block","Planner","Photo and video","Guest travel","Honeymoon"] %}<label class="opt"><input type="checkbox" name="services" value="{{ o }}"><span>{{ o }}</span></label>{% endfor %}</div></fieldset>
+        <label class="consent"><input type="checkbox" name="consent" value="yes" required> Share my request with up to three vetted wedding partners.</label>
+        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-primary" type="submit">Send my wedding request</button>
+      </form>
+      <div class="trust"><span>Free</span><span>No obligation</span><span>Specialists in Mexico venues</span></div>
+    </div>
+  </div>
+</section>
+<section class="band band-agua">
+  <div class="wrap">
+    <h2>Honeymoon picks by month</h2>
+    <div class="grid-3 mt5">
+      {% for m in [0,3,6,9,10,11] %}{% set top = (dests|selectattr('beachy')|sort(attribute='scores.' ~ m, reverse=true)|list) %}
+      <div><h3>{{ MONTHS_LONG[m] }}</h3><ul class="tick">{% for t in top if 'romance' in t.vibes %}{% if loop.index <= 3 %}<li><a href="{{ root }}destinations/{{ t.slug }}/">{{ t.name }}</a> <span class="small">score {{ t.scores[m] }}</span></li>{% endif %}{% endfor %}</ul></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

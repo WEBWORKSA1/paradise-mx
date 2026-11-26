@@ -1,0 +1,94 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero">
+  <div class="wrap split">
+    <div>
+      <h1>Plan my Mexico trip</h1>
+      <p class="lede">Four short steps. A vetted Mexico travel specialist sends you a personalised shortlist of where to stay, when to go and what to book, usually within 48 hours.</p>
+      <ul class="tick">
+        <li>Free, with no obligation to book</li>
+        <li>Specialists who know the Caribbean, Pacific and Baja coasts first-hand</li>
+        <li>Honest advice on seasons, sargassum and storm risk</li>
+        <li>All-inclusives, boutique hotels, villas and eco-lodges</li>
+      </ul>
+      <div class="note mt5">
+        <p class="mb0"><b>How this works.</b> Paradise.mx is a free guide. When you send this form we pass your request to up to three independent travel partners, who may pay us a referral fee. That never changes our rankings, and you only hear from partners you agree to.</p>
+      </div>
+    </div>
+    <div class="panel panel-shadow">
+      <form class="form wizard" data-form="trip-plan" data-subject="Paradise.mx LEAD (trip plan) - {destination} - {month} - {adults}A/{children}C - {budget}" data-ok="Thank you. Your request is with our travel specialists, and your shortlist will arrive within 48 hours. Check your spam folder just in case." novalidate>
+        <div class="progress" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <p class="small mb0" data-stepnum>Step 1 of 4</p>
+
+        <fieldset class="step">
+          <legend><h2 class="mb0">Where and when</h2></legend>
+          <div class="field"><label for="p-dest">Destination</label>
+            <select id="p-dest" name="destination" data-prefill="dest">
+              <option value="Not sure - please recommend">Not sure yet, recommend the best fit</option>
+              {% for r in REGIONS %}<optgroup label="{{ REGION_LABEL[r] }}">{% for d in dests if d.region == r %}<option value="{{ d.slug }}">{{ d.name }}</option>{% endfor %}</optgroup>{% endfor %}
+            </select></div>
+          <div class="row">
+            <div class="field"><label for="p-month">Month</label><select id="p-month" name="month" data-prefill="month">{% for m in MONTHS_LONG %}<option value="{{ m }}"{% if loop.index0 == month_now %} selected{% endif %}>{{ m }}</option>{% endfor %}<option value="Flexible">Flexible</option></select></div>
+            <div class="field"><label for="p-nights">Nights</label><select id="p-nights" name="nights"><option>3-4</option><option selected>5-7</option><option>8-10</option><option>11-14</option><option>15+</option></select></div>
+          </div>
+          <fieldset class="field"><legend>How fixed are your dates?</legend>
+            <div class="opts"><label class="opt"><input type="radio" name="dates" value="Fixed dates" required><span>Fixed</span></label><label class="opt"><input type="radio" name="dates" value="Flexible by a few days"><span>A few days either way</span></label><label class="opt"><input type="radio" name="dates" value="Very flexible"><span>Very flexible</span></label></div></fieldset>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend><h2 class="mb0">Who's travelling</h2></legend>
+          <div class="row">
+            <div class="field"><label for="p-ad">Adults</label><input id="p-ad" type="number" name="adults" min="1" max="200" value="2" required></div>
+            <div class="field"><label for="p-ch">Children</label><input id="p-ch" type="number" name="children" min="0" max="50" value="0"></div>
+          </div>
+          <fieldset class="field"><legend>What's the occasion?</legend>
+            <div class="opts">{% for o in ["Holiday","Honeymoon","Anniversary","Birthday","Family trip","Group or friends","Wedding","Scouting a move"] %}<label class="opt"><input type="radio" name="occasion" value="{{ o }}"{% if loop.first %} required{% endif %}><span>{{ o }}</span></label>{% endfor %}</div></fieldset>
+          <div class="field"><label for="p-from">Flying from</label><input id="p-from" type="text" name="departure_city" placeholder="City or airport, e.g. Toronto"></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend><h2 class="mb0">Style and budget</h2></legend>
+          <div class="field"><label for="p-budget">Budget per person, including flights</label>
+            <select id="p-budget" name="budget" data-prefill="budget"><option value="Under US$1,000">Under US$1,000</option><option value="US$1,000-2,500" selected>US$1,000-2,500</option><option value="US$2,500-5,000">US$2,500-5,000</option><option value="US$5,000-10,000">US$5,000-10,000</option><option value="US$10,000+">US$10,000+</option></select></div>
+          <fieldset class="field"><legend>Where would you like to stay?</legend>
+            <div class="opts">{% for o in ["All-inclusive resort","Adults-only resort","Boutique hotel","Villa or vacation rental","Eco-lodge","Mix it up"] %}<label class="opt"><input type="radio" name="stay_style" value="{{ o }}"{% if loop.first %} required{% endif %}><span>{{ o }}</span></label>{% endfor %}</div></fieldset>
+          <fieldset class="field"><legend>Help with</legend>
+            <div class="opts">{% for o in ["Flights","Airport transfers","Tours and excursions","Cenotes and diving","Restaurant reservations","Travel insurance","Car rental"] %}<label class="opt"><input type="checkbox" name="services" value="{{ o }}"><span>{{ o }}</span></label>{% endfor %}</div></fieldset>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend><h2 class="mb0">Where should we send it?</h2></legend>
+          <div class="row">
+            <div class="field"><label for="p-name">Full name</label><input id="p-name" type="text" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="p-email">Email</label><input id="p-email" type="email" name="email" autocomplete="email" required></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="p-phone">Phone or WhatsApp (optional)</label><input id="p-phone" type="tel" name="phone" autocomplete="tel"></div>
+            <div class="field"><label for="p-country">Country</label><input id="p-country" type="text" name="country" autocomplete="country-name"></div>
+          </div>
+          <fieldset class="field"><legend>Best way to reach you</legend>
+            <div class="opts"><label class="opt"><input type="radio" name="contact_pref" value="Email" checked><span>Email</span></label><label class="opt"><input type="radio" name="contact_pref" value="Phone call"><span>Phone call</span></label><label class="opt"><input type="radio" name="contact_pref" value="WhatsApp"><span>WhatsApp</span></label></div></fieldset>
+          <div class="field"><label for="p-notes">Anything else? (optional)</label><textarea id="p-notes" name="notes" placeholder="Must-haves, accessibility needs, dream experiences"></textarea></div>
+          <label class="consent"><input type="checkbox" name="consent" value="yes" required> I agree that Paradise.mx may share this request with up to three vetted travel partners to prepare my shortlist, as described in the <a href="{{ root }}privacy/">privacy policy</a>.</label>
+          <label class="consent"><input type="checkbox" name="newsletter" value="yes"> Send me the monthly "where to go next" email.</label>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        </fieldset>
+
+        <div class="wiz-nav">
+          <button class="btn btn-quiet" type="button" data-back>Back</button>
+          <button class="btn btn-primary" type="button" data-next>Continue</button>
+          <button class="btn btn-primary" type="submit">Send my request</button>
+        </div>
+        <div class="trust"><span>Free</span><span>No obligation</span><span>Reply within 48 hours</span><span>Your details are never sold to marketers</span></div>
+      </form>
+    </div>
+  </div>
+</section>
+<section class="band band-agua">
+  <div class="wrap grid-3">
+    <div><h3>Not sure where to go?</h3><p class="muted">Choose "recommend the best fit" and we'll use the Paradise score for your month and style.</p><a href="{{ root }}best-time/">See the month matrix</a></div>
+    <div><h3>Planning a wedding?</h3><p class="muted">Group room blocks and ceremony planning need their own form.</p><a href="{{ root }}weddings/">Weddings and honeymoons</a></div>
+    <div><h3>Moving or buying?</h3><p class="muted">Relocation, residency and property questions go to different specialists.</p><a href="{{ root }}live/">Live in Mexico</a></div>
+  </div>
+</section>
+{% endblock %}

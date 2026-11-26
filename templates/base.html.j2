@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" data-root="{{ root }}">
+<head>
+<meta charset="utf-8">
+{% block basehref %}{% endblock %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ desc }}">
+{% if noindex %}<meta name="robots" content="noindex">{% endif %}
+<link rel="canonical" href="{{ canonical }}">
+<meta property="og:type" content="{{ 'article' if article else 'website' }}">
+<meta property="og:site_name" content="Paradise.mx">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ desc }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:image" content="{{ base_url }}/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0E4D5C">
+<link rel="icon" href="{{ root }}favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="{{ root }}manifest.webmanifest">
+<link rel="preload" href="{{ root }}assets/fonts/bricolage-grotesque-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ root }}assets/css/site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Paradise.mx","url":"{{ base_url }}/","description":"Where is Mexico paradise this month? Rankings, guides and free trip planning for Mexico's beaches and paradise towns."}</script>
+{% block head %}{% endblock %}
+</head>
+<body{% if mcta %} class="has-mcta"{% endif %}>
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap"><p class="mb0"><a href="https://web.works/contact" rel="noopener">Contact, if you are interested in this website/domain name/Sponsorship/Advertisement/Partnership</a></p></div></div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="{{ root }}" aria-label="Paradise.mx home">{{ logo|safe }}<span>paradise<b>.mx</b></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      {% set nav = [("destinations/","Destinations"),("best-time/","Best time"),("tools/","Tools"),("guides/","Guides"),("weddings/","Weddings"),("live/","Live in Mexico")] %}
+      {% for href, label in nav %}<a href="{{ root }}{{ href }}"{% if path.startswith(href) %} aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}
+      <a class="btn btn-primary btn-small" href="{{ root }}plan/">Plan my trip</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="{{ root }}" style="color:#fff">{{ logo|safe }}<span>paradise<b>.mx</b></span></a>
+        <p class="mt4">An independent guide to Mexico's beaches, islands and paradise towns, ranked for the month you can travel.</p>
+        <form data-form="newsletter" data-subject="Paradise.mx - newsletter signup" data-ok="You're on the list. Expect one useful email a month, no spam." novalidate>
+          <label class="vh" for="nl-email">Email address</label>
+          <div class="news-signup"><input id="nl-email" type="email" name="email" placeholder="Your email for the monthly picks" required><button class="btn btn-primary btn-small" type="submit">Subscribe</button></div>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        </form>
+      </div>
+      <div><h4>Explore</h4><ul>
+        <li><a href="{{ root }}destinations/">All destinations</a></li><li><a href="{{ root }}best-time/">Best time to visit</a></li>
+        <li><a href="{{ root }}calendar/">Seasons calendar</a></li><li><a href="{{ root }}videos/">Videos</a></li><li><a href="{{ root }}news/">Travel news</a></li></ul></div>
+      <div><h4>Plan</h4><ul>
+        <li><a href="{{ root }}plan/">Plan my trip</a></li><li><a href="{{ root }}weddings/">Weddings and honeymoons</a></li>
+        <li><a href="{{ root }}live/">Live in Mexico</a></li><li><a href="{{ root }}tools/">Trip tools</a></li><li><a href="{{ root }}guides/">Guides</a></li></ul></div>
+      <div><h4>Community</h4><ul>
+        <li><a href="{{ root }}support/">Support us</a></li><li><a href="{{ root }}contests/">Photo contest</a></li>
+        <li><a href="{{ root }}careers/">Work with us</a></li><li><a href="{{ root }}advertise/">Advertise and partner</a></li></ul></div>
+      <div><h4>Paradise.mx</h4><ul>
+        <li><a href="{{ root }}about/">About</a></li><li><a href="{{ root }}contact/">Contact</a></li><li><a href="{{ root }}privacy/">Privacy</a></li>
+        <li><a href="{{ root }}terms/">Terms</a></li><li><a href="{{ root }}disclaimer/">Disclaimer and trademarks</a></li></ul></div>
+    </div>
+    <div class="legal-line">
+      <p>© <span data-year>{{ year }}</span> Paradise.mx. Original text, data compilations and illustrations are protected by copyright. Paradise.mx is an independent publication and is not affiliated with any government tourism body, airline, resort, hotel or business that uses the word "Paradise". Trademarks belong to their owners. <a href="{{ root }}disclaimer/">Full disclosure</a>.</p>
+      <p class="mb0">Travel information changes. Always confirm entry rules, prices and safety advice with official sources before you book. Data last refreshed {{ built }}.</p>
+    </div>
+  </div>
+</footer>
+<div class="cookie" id="cookie" role="dialog" aria-label="Cookie notice">
+  <p>We use cookies for ads and to remember your choices. Advertising partners, including Google, may use cookies to show ads based on your visits. <a href="{{ root }}privacy/">Privacy policy</a></p>
+  <div style="display:flex;gap:8px;flex:none"><button class="btn btn-quiet btn-small" data-cookie="essential">Essential only</button><button class="btn btn-primary btn-small" data-cookie="all">Accept</button></div>
+</div>
+{% if mcta %}<div class="m-cta"><a class="btn btn-primary" href="{{ root }}plan/{{ mcta if mcta is string else '' }}">Get my free trip plan</a></div>{% endif %}
+{% if pdata %}<script type="application/json" id="pdata">{{ pdata|safe }}</script>{% endif %}
+<script src="{{ root }}assets/js/config.js"></script>
+<script src="{{ root }}assets/js/site.js" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,8 +1,65 @@
 name: Refresh Paradise.mx data
+
 on:
+  schedule:
+    - cron: "17 */6 * * *"   # every 6 hours
   workflow_dispatch:
+    inputs:
+      force_normals:
+        description: "Recompute climate normals now"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
 jobs:
-  noop:
+  refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
-      - run: echo "placeholder"
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install generator dependency
+        run: pip install "jinja2==3.1.6"
+
+      - name: Refresh data and rebuild pages
+        run: |
+          if [ "${{ inputs.force_normals }}" = "true" ]; then
+            python scripts/update.py --force-normals
+          else
+            python scripts/update.py
+          fi
+
+      - name: Commit and push changes
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes."
+          else
+            git commit -m "Auto-refresh: data and pages $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Ask GitHub Pages to rebuild
+        if: steps.commit.outputs.changed == 'true'
+        continue-on-error: true
+        run: |
+          curl -s -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/builds" || true

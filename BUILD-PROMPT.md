@@ -95,9 +95,9 @@ Copy each phase into a coding assistant in order. Each phase ends with a check.
 ### Phase 0 — Ground rules
 > Build a static, dependency-free website for **Paradise.mx** that runs on GitHub Pages (free plan) from the `main` branch root. Use HTML, CSS and vanilla JavaScript for the site; Python + Jinja2 only for generating pages. All internal links must be relative so the site works on `username.github.io/paradise-mx/` and on `paradise.mx`. Put the AdSense script exactly as given in every page `<head>`:
 > `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>`
-> Add `ads.txt` with `google.com, pub-6620975821265271, DIRECT, f08c47fec0942fa0`. Every page starts with a slim bar reading "Contact, if you are interested in this website/domain name/Sponsorship/Advertisement/Partnership" linked to https://web.works/contact. Every form posts through FormSubmit's AJAX endpoint to one inbox whose address is never written in plain text anywhere: store it as an encoded array in `assets/js/config.js` and assemble it at submit time.
+> Add `ads.txt` with `google.com, pub-6620975821265271, DIRECT, f08c47fec0942fa0`. Every page starts with a slim bar reading "Contact, if you are interested in this website/domain name/Sponsorship/Advertisement/Partnership", linked (link text only, URL hidden under the link) to the owner's contact page. Every form posts through FormSubmit's AJAX endpoint to the owner's single inbox, whose address is never written in plain text anywhere: store it as an encoded array in `assets/js/config.js` and assemble it at submit time.
 >
-> **Check:** `grep -ri "gmail" .` returns nothing.
+> **Check:** a recursive grep for the inbox address or its mail domain returns nothing.
 
 ### Phase 1 — Data model
 > Create `data/destinations.json` with 38 destinations (Caribbean, Yucatán, Pacific, Oaxaca coast, Baja & Sea of Cortez, highlands). Fields: slug, name, state, region, climate zone, lat/lon, nearest airport (IATA + name), vibes, budget tier, sargassum exposure, Pueblo Mágico flag, summary, highlights, where-to-stay areas, insider tip, optional YouTube id. Create `data/climate.json` with monthly typical high °C, rainy days and sea °C per climate zone plus hurricane and sargassum calendars.

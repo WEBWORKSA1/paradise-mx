@@ -1,0 +1,15 @@
+{
+  "name": "Paradise.mx",
+  "short_name": "Paradise",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0E4D5C",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap split">
+  <div>
+    <h1>Support Paradise.mx</h1>
+    <p class="lede">Paradise.mx is free to use and independent: no paid rankings, no hidden placements. Your support pays for the research, the tools and the people who keep them accurate.</p>
+    <h2 class="mt6">Where your support goes</h2>
+    <div class="stay mt5">
+      <div><h3>Operations</h3><p class="muted mb0">Data, hosting, tools and keeping 38 destinations up to date.</p></div>
+      <div><h3>Promotion and marketing</h3><p class="muted mb0">Reaching more travellers so local businesses benefit.</p></div>
+      <div><h3>Hiring local talent</h3><p class="muted mb0">Paying writers, photographers and video creators who live in Mexico.</p></div>
+      <div><h3>Contests and prizes</h3><p class="muted mb0">Funding the monthly <a href="{{ root }}contests/">Paradise Lens</a> photo contest.</p></div>
+    </div>
+    <div class="note mt6"><p class="mb0"><b>How giving works.</b> Choose an amount and send the form. We email you a secure payment link within one business day, and you can pay by card. Paradise.mx is not a registered charity, so support is not tax-deductible.</p></div>
+    <div id="pay-direct" class="mt5" hidden>
+      <h3>Prefer to pay now?</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" id="pay-once" href="#" rel="noopener" target="_blank">Give once</a><a class="btn btn-quiet" id="pay-month" href="#" rel="noopener" target="_blank">Give monthly</a></div>
+    </div>
+  </div>
+  <div class="panel panel-shadow">
+    <form class="form" id="support-form" data-form="support-pledge" data-subject="Paradise.mx SUPPORT pledge - {amount_usd} USD - {frequency} - {allocation}" data-ok="Thank you! We'll email your secure payment link within one business day." novalidate>
+      <fieldset class="field"><legend>Choose an amount</legend>
+        <div class="tiers">
+          <label class="tier"><input type="radio" name="tier" value="Coffee" data-amt="5"><span class="box"><span class="amt">$5</span><br>Buys a coffee for a local writer</span></label>
+          <label class="tier"><input type="radio" name="tier" value="Sunset" data-amt="25" checked><span class="box"><span class="amt">$25</span><br>Funds a destination update</span></label>
+          <label class="tier"><input type="radio" name="tier" value="Island hop" data-amt="100"><span class="box"><span class="amt">$100</span><br>Funds a contest prize</span></label>
+          <label class="tier"><input type="radio" name="tier" value="Patron" data-amt="500"><span class="box"><span class="amt">$500</span><br>Patron, thanked on our About page</span></label>
+          <label class="tier"><input type="radio" name="tier" value="custom"><span class="box"><span class="amt">Other</span><br>Choose your own amount</span></label>
+        </div>
+      </fieldset>
+      <div class="field"><label for="don-custom">Amount in US dollars</label><input id="don-custom" type="number" min="1" step="1" placeholder="50"></div>
+      <input type="hidden" id="don-amount" name="amount_usd" value="25">
+      <fieldset class="field"><legend>How often?</legend><div class="opts"><label class="opt"><input type="radio" name="frequency" value="One-time" checked><span>One time</span></label><label class="opt"><input type="radio" name="frequency" value="Monthly"><span>Monthly</span></label></div></fieldset>
+      <div class="field"><label for="don-use">Use my support for</label><select id="don-use" name="allocation"><option>Wherever it's needed most</option><option>Operations</option><option>Promotion and marketing</option><option>Hiring local talent</option><option>Contests and prizes</option></select></div>
+      <div class="row">
+        <div class="field"><label for="don-name">Name</label><input id="don-name" type="text" name="name" required></div>
+        <div class="field"><label for="don-email">Email</label><input id="don-email" type="email" name="email" required></div>
+      </div>
+      <div class="field"><label for="don-msg">Message (optional)</label><input id="don-msg" type="text" name="message"></div>
+      <label class="consent"><input type="checkbox" name="public_thanks" value="yes"> You may thank me by name on the About page.</label>
+      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-primary" type="submit">Send my pledge</button>
+    </form>
+  </div>
+</div></section>
+<section class="band band-agua"><div class="wrap grid-3">
+  <div><h3>Run a business in Mexico?</h3><p class="muted">Sponsorships are a better fit than donations, with clear labelling and real visibility.</p><a href="{{ root }}advertise/">See sponsorship options</a></div>
+  <div><h3>Want to contribute your skills?</h3><p class="muted">We pay local writers, photographers and video creators.</p><a href="{{ root }}careers/">Work with us</a></div>
+  <div><h3>Have a photo of paradise?</h3><p class="muted">Enter the free monthly contest.</p><a href="{{ root }}contests/">Enter Paradise Lens</a></div>
+</div></section>
+{% endblock %}

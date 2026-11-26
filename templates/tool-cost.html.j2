@@ -1,0 +1,24 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap">
+  <h1>Mexico trip cost estimator</h1>
+  <p class="lede">A realistic starting budget for any of our 38 destinations. Change the inputs and the estimate updates instantly.</p>
+</div></section>
+<section class="band-tight"><div class="wrap split">
+  <form class="panel form" id="cost-tool" onsubmit="return false">
+    <div class="field"><label for="tc-dest">Destination</label><select id="tc-dest"></select></div>
+    <div class="row">
+      <div class="field"><label for="tc-nights">Nights</label><input id="tc-nights" type="number" min="1" max="60" value="7"></div>
+      <div class="field"><label for="tc-people">Travellers</label><input id="tc-people" type="number" min="1" max="40" value="2"></div>
+    </div>
+    <div class="field"><label for="tc-style">Travel style</label><select id="tc-style"><option value="0">Budget: guesthouses, street food</option><option value="1" selected>Mid-range: 3-4 star hotels</option><option value="2">Upscale: boutique and 5 star</option><option value="3">Luxury: top resorts and villas</option></select></div>
+    <label class="consent"><input type="checkbox" id="tc-ai"> All-inclusive (replaces separate hotel and food costs; not available on the budget style)</label>
+    <div class="field"><label for="tc-flight">Return flight per person (US$)</label><input id="tc-flight" type="number" min="0" step="10" value="450"><p class="hint">Use a real fare from your city if you have one.</p></div>
+  </form>
+  <div>
+    <h2>Your estimate</h2>
+    <div id="tc-out" aria-live="polite"></div>
+    <div class="note mt5"><p class="small mb0">How we estimate: baseline daily costs for each travel style, adjusted by each destination's price level (from $ to $$$$). Rooms assume two people per room. These are planning figures, not quotes; prices swing with season, holidays and exchange rates.</p></div>
+  </div>
+</div></section>
+{% endblock %}

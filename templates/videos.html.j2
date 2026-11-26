@@ -1,0 +1,19 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap">
+  <h1>Mexico travel videos</h1>
+  <p class="lede">Video guides from independent creators, picked for useful, practical information. Videos play on YouTube's privacy-enhanced player only when you press play.</p>
+</div></section>
+<section class="band-tight"><div class="wrap">
+  {% if videos['items'] %}
+  <div class="vids">
+    {% for v in videos['items'] %}
+    <div><div class="yt" data-id="{{ v.id }}" data-title="{{ v.title }}"><img src="https://i.ytimg.com/vi/{{ v.id }}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"><button aria-label="Play video: {{ v.title }}"></button></div>
+      <div class="vid-cap">{{ v.title }}<small>{{ v.channel or "YouTube" }}{% if v.dest and by_slug.get(v.dest) %} · <a href="{{ root }}destinations/{{ v.dest }}/">{{ by_slug[v.dest].name }} guide</a>{% endif %}</small></div></div>
+    {% if loop.index == 6 %}</div><div class="ad-wrap" data-ad></div><div class="vids">{% endif %}
+    {% endfor %}
+  </div>
+  {% else %}<p class="empty">Videos refresh automatically. Check back soon.</p>{% endif %}
+  <p class="small mt6">All videos belong to their creators and are embedded with YouTube's standard player under YouTube's terms. Paradise.mx does not host or re-upload video content. Creators can ask us to remove an embed through the <a href="{{ root }}contact/">contact form</a>. Last refreshed {{ videos.updated or built }}.</p>
+</div></section>
+{% endblock %}

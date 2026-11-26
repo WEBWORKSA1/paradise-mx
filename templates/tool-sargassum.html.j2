@@ -1,0 +1,12 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap">
+  <h1>Sargassum outlook</h1>
+  <p class="lede">Sargassum is floating seaweed that washes onto Caribbean beaches in some months. Choose a month to see which beaches are usually least affected and the best seaweed-free alternatives.</p>
+  <div class="field mt5" style="max-width:260px"><label for="sg-month">Month</label><select id="sg-month">{% for m in MONTHS_LONG %}<option value="{{ loop.index0 }}">{{ m }}</option>{% endfor %}</select></div>
+</div></section>
+<section class="band-tight" id="sarg-tool"><div class="wrap">
+  <div id="sg-out" aria-live="polite"></div>
+  <div class="callout mt6"><p>This outlook uses typical seasonal patterns. For this week's conditions, check a live source such as the citizen-science maps at <a href="https://sargassummonitoring.com/en/" rel="noopener" target="_blank">Sargassum Monitoring</a> or local beach webcams, and read <a href="{{ root }}guides/sargassum-season-guide/">our sargassum guide</a>.</p></div>
+</div></section>
+{% endblock %}

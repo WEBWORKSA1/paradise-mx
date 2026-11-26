@@ -1,0 +1,149 @@
+{% extends "base.html.j2" %}
+{% set mcta = "?dest=" ~ d.slug %}
+{% block head %}
+<script type="application/ld+json">{{ {
+  "@context":"https://schema.org","@type":"TouristDestination","name": d.name ~ ", " ~ d.state ~ ", Mexico","description": d.summary,
+  "geo":{"@type":"GeoCoordinates","latitude": d.lat,"longitude": d.lon},"touristType": d.vibes } | tojson }}</script>
+<script type="application/ld+json">{{ {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"When is the best time to visit " ~ d.name ~ "?","acceptedAnswer":{"@type":"Answer","text":"By our Paradise score, the best months are " ~ d.best_text ~ ". The least comfortable months are usually " ~ d.worst_text ~ "."}},
+  {"@type":"Question","name":"Which airport is closest to " ~ d.name ~ "?","acceptedAnswer":{"@type":"Answer","text": d.airportName ~ " (" ~ d.airport ~ "). Transfer time: " ~ d.transfer ~ "."}},
+  {"@type":"Question","name":"Does " ~ d.name ~ " get sargassum?","acceptedAnswer":{"@type":"Answer","text": ("Exposure is real on this coast; the typical risk window is " ~ d.sarg_months ~ ". Check live monitors before you travel.") if d.sarg_months else "Sargassum is not a significant issue here."}}
+]} | tojson }}</script>
+{% endblock %}
+{% block content %}
+{% set m = month_now %}
+<section class="dest-hero">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ root }}">Home</a> / <a href="{{ root }}destinations/">Destinations</a> / {{ REGION_LABEL[d.region] }}</nav>
+    <div class="dest-grid">
+      <div>
+        <h1>{{ d.name }}</h1>
+        <p class="lede">{{ d.tagline }}</p>
+        <dl class="kv">
+          <div><dt>State</dt><dd>{{ d.state }}</dd></div>
+          <div><dt>Fly into</dt><dd>{{ d.airport }}, {{ d.transfer }}</dd></div>
+          <div><dt>Best months</dt><dd>{{ d.best_text|capitalize }}</dd></div>
+          <div><dt>Budget</dt><dd>{{ d.budget_str }}{% if d.pueblo %}, Pueblo Mágico{% endif %}</dd></div>
+          <div><dt>{{ MONTHS_LONG[m] }} score</dt><dd>{{ d.scores[m] }} / 100</dd></div>
+        </dl>
+        <div class="mt5" style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn btn-primary" href="{{ root }}plan/?dest={{ d.slug }}">Plan my trip to {{ d.name }}</a>
+          <a class="btn btn-quiet" href="{{ root }}tools/trip-cost/?dest={{ d.slug }}">Estimate the cost</a>
+        </div>
+      </div>
+      <div class="art"><img src="{{ root }}assets/img/postcards/{{ d.slug }}.svg" alt="Illustration of {{ d.name }}" width="400" height="300"></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap layout-2 band-tight">
+  <article>
+    <section>
+      <h2>Why go</h2>
+      <div class="prose"><p>{{ d.summary }}</p></div>
+      <ul class="tick mt5">{% for h in d.highlights %}<li>{{ h }}</li>{% endfor %}</ul>
+      <p>{% for v in d.vibes %}<a class="pill" href="{{ root }}destinations/?vibe={{ v }}">{{ v }}</a>{% endfor %}</p>
+    </section>
+
+    <div class="ad-wrap" data-ad></div>
+
+    <section class="mt6" id="when">
+      <h2>When to go</h2>
+      <div class="prose">
+        <p>By our Paradise score, {{ d.name }} is at its best in <b>{{ d.best_text }}</b>{% if d.top >= 85 %}, when it ranks among the strongest choices in Mexico{% endif %}. Typical daytime highs run from {{ d.hi_range[0] }}°C to {{ d.hi_range[1] }}°C across the year{% if d.sea_range %}, and the {{ 'lagoon' if d.type == 'lagoon' else 'sea' }} sits between {{ d.sea_range[0] }}°C and {{ d.sea_range[1] }}°C{% endif %}.
+        {{ ' ' }}{% if d.wettest %}The wettest stretch is {{ d.wettest }}, when afternoon downpours are common.{% else %}Rain is rare in most months.{% endif %}
+        {{ ' ' }}{% if d.basin != 'none' and d.beachy %}{{ 'Atlantic' if d.basin == 'atlantic' else 'Eastern Pacific' }} hurricane season runs from {{ 'June' if d.basin == 'atlantic' else 'mid-May' }} to November, peaking in September; buy travel insurance that covers storms if you book in those months.{% endif %}</p>
+        {% if d.sarg_months %}<p>Sargassum seaweed can reach this coast, most often in {{ d.sarg_months }}. Severity changes a lot from year to year and beach to beach; see our <a href="{{ root }}tools/sargassum/">sargassum outlook</a> for seaweed-free alternatives.</p>{% endif %}
+      </div>
+      <div class="months-chart" role="img" aria-label="Paradise score by month for {{ d.name }}">
+        {% for s in d.scores %}<div class="col{% if loop.index0 in d.best %} best{% endif %}{% if loop.index0 == m %} now{% endif %}"><em>{{ s }}</em><i style="height:{{ (s * 1.2)|round|int }}px"></i><span>{{ MONTHS[loop.index0] }}</span></div>{% endfor %}
+      </div>
+      <p class="small">Pink bars mark the best months. Scores combine air temperature, rainy days, water temperature, storm season, sargassum exposure and seasonal wildlife. <a href="{{ root }}about/#score">How the score works</a>.</p>
+      <div class="table-scroll mt5">
+        <table class="clim">
+          <thead><tr><th>Typical</th>{% for mm in MONTHS %}<th>{{ mm }}</th>{% endfor %}</tr></thead>
+          <tbody>
+            <tr><td>High °C</td>{% for x in d.md %}<td>{{ x.hi }}</td>{% endfor %}</tr>
+            <tr><td>Rainy days</td>{% for x in d.md %}<td>{{ x.rain }}</td>{% endfor %}</tr>
+            {% if d.sea_range %}<tr><td>{{ 'Lagoon' if d.type == 'lagoon' else 'Sea' }} °C</td>{% for x in d.md %}<td>{{ x.sea }}</td>{% endfor %}</tr>{% endif %}
+            <tr><td>Score</td>{% for s in d.scores %}{% set c = d.colors[loop.index0] %}<td><span style="background:{{ c[0] }};color:{{ c[1] }};padding:2px 6px;border-radius:999px;font-weight:800">{{ s }}</span></td>{% endfor %}</tr>
+          </tbody>
+        </table>
+      </div>
+      {% if d.events_full %}
+      <h3 class="mt6">Seasonal highlights</h3>
+      <ul class="tick">{% for e in d.events_full %}<li><b>{{ e.name }}</b> ({{ e.months_text }}). {{ e.note }}</li>{% endfor %}</ul>
+      {% endif %}
+    </section>
+
+    <section class="mt6" id="live">
+      <h2>Live weather in {{ d.name }}</h2>
+      <div class="note" id="dest-weather" data-lat="{{ d.lat }}" data-lon="{{ d.lon }}" data-sea="{{ 1 if d.beachy else 0 }}">
+        <div class="weather-now" id="dw-now"><span class="small">Loading the live forecast…</span></div>
+        <p class="small mb0 mt4" id="dw-sea"></p>
+        <div class="forecast" id="dw-days"></div>
+      </div>
+      <p class="small mt4">Forecast by Open-Meteo, updated hourly.</p>
+    </section>
+
+    <section class="mt6">
+      <h2>Where to stay</h2>
+      <div class="stay mt5">{% for a in d.stay %}<div><h3>{{ a[0] }}</h3><p class="muted mb0">{{ a[1] }}</p></div>{% endfor %}</div>
+      <div class="callout"><p><b>Local tip.</b> {{ d.tip }}</p></div>
+    </section>
+
+    {% set vids = videos['items']|selectattr('dest', 'equalto', d.slug)|list %}
+    {% if vids %}
+    <section class="mt6">
+      <h2>Watch: {{ d.name }}</h2>
+      {% set v = vids[0] %}
+      <div class="yt" data-id="{{ v.id }}" data-title="{{ v.title }}"><img src="https://i.ytimg.com/vi/{{ v.id }}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"><button aria-label="Play video: {{ v.title }}"></button></div>
+      <p class="vid-cap">{{ v.title }}<small>{{ v.channel or "YouTube" }}. Video by its creator, embedded with YouTube's player.</small></p>
+    </section>
+    {% endif %}
+
+    <section class="mt6">
+      <h2>Getting there and staying safe</h2>
+      <div class="prose">
+        <p>The nearest airport is <b>{{ d.airportName }} ({{ d.airport }})</b>; allow {{ d.transfer }} for the transfer. Use the authorised taxi or shuttle desks inside the terminal or a pre-booked transfer, and ignore touts in the arrivals hall.</p>
+        <p>Before you book, read the current advisory for {{ d.state }} from your own government: <a href="https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html" rel="noopener" target="_blank">United States</a>, <a href="https://travel.gc.ca/destinations/mexico" rel="noopener" target="_blank">Canada</a> or <a href="https://www.gov.uk/foreign-travel-advice/mexico" rel="noopener" target="_blank">United Kingdom</a>. Advisories are set state by state and change, so check close to departure. Our <a href="{{ root }}guides/mexico-travel-safety/">safety guide</a> and <a href="{{ root }}guides/mexico-entry-requirements/">entry guide</a> cover the practical side.</p>
+        {% if d.state == "Quintana Roo" %}<p>Foreign visitors to Quintana Roo must pay the state's Visitax tourist fee once per stay, online through the official state portal (<a href="https://visitax.gob.mx" rel="noopener" target="_blank">visitax.gob.mx</a>). In 2026 it is roughly MX$285–295 per person. Pay only on the official site and keep the QR code for the airport check.</p>{% endif %}
+      </div>
+    </section>
+
+    <section class="mt6">
+      <h2>Frequently asked</h2>
+      <h3>When is the best time to visit {{ d.name }}?</h3>
+      <p>{{ d.best_text|capitalize }}. The least comfortable months are usually {{ d.worst_text }}.</p>
+      <h3>Which airport is closest to {{ d.name }}?</h3>
+      <p>{{ d.airportName }} ({{ d.airport }}), {{ d.transfer }} away.</p>
+      <h3>Is {{ d.name }} good for {{ 'families' if 'family' in d.vibes else 'couples' if 'romance' in d.vibes else 'a first trip to Mexico' }}?</h3>
+      <p>{% if 'family' in d.vibes %}Yes. It is one of our family picks for calm water and easy logistics.{% elif 'romance' in d.vibes %}Yes. Its quieter pace and setting make it a strong couples' choice.{% else %}It suits travellers who like {{ d.vibes[:3]|join(', ') }}. If that's you, it's a great pick.{% endif %}</p>
+    </section>
+  </article>
+
+  <aside>
+    <div class="panel panel-shadow" id="lead">
+      <h3>Get a free {{ d.name }} shortlist</h3>
+      <p class="small">A Mexico specialist sends hand-picked stays and timing advice for your dates. No obligation.</p>
+      <form class="form" data-form="destination-lead" data-subject="Paradise.mx LEAD - {destination} - {month} - {travellers} travellers - budget {budget}" data-ok="Thanks! Your {{ d.name }} shortlist is on its way within 48 hours." novalidate>
+        <input type="hidden" name="destination" value="{{ d.name }}">
+        <div class="field"><label for="l-month">Month</label><select id="l-month" name="month" data-prefill="month">{% for mm in MONTHS_LONG %}<option value="{{ mm }}"{% if loop.index0 == d.best[0] %} selected{% endif %}>{{ mm }}</option>{% endfor %}<option>Flexible</option></select></div>
+        <div class="row">
+          <div class="field"><label for="l-trav">Travellers</label><input id="l-trav" type="number" name="travellers" min="1" value="2" required></div>
+          <div class="field"><label for="l-budget">Budget pp</label><select id="l-budget" name="budget"><option>Under US$1,000</option><option selected>US$1,000-2,500</option><option>US$2,500-5,000</option><option>US$5,000+</option></select></div>
+        </div>
+        <div class="field"><label for="l-name">Name</label><input id="l-name" type="text" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="l-email">Email</label><input id="l-email" type="email" name="email" autocomplete="email" required></div>
+        <label class="consent"><input type="checkbox" name="consent" value="yes" required> Share my request with up to three vetted travel partners.</label>
+        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-primary" type="submit">Send my request</button>
+      </form>
+    </div>
+    <div class="mt5">
+      <h3>Similar places</h3>
+      <ul class="news">{% for s in similar %}<li><a href="{{ root }}destinations/{{ s.slug }}/">{{ s.name }}</a><div class="src">Best {{ s.best_text }}</div></li>{% endfor %}</ul>
+    </div>
+  </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap split">
+  <div>
+    <h1>Contact us</h1>
+    <p class="lede">Questions, corrections, partnership ideas or feedback: send a message and we'll reply within two business days.</p>
+    <ul class="tick">
+      <li>Planning a trip? The <a href="{{ root }}plan/">trip plan form</a> is the fastest route.</li>
+      <li>Weddings and honeymoons have their <a href="{{ root }}weddings/">own form</a>.</li>
+      <li>Advertising and sponsorship: see <a href="{{ root }}advertise/">partner packages</a>.</li>
+      <li>Interested in this website or the domain? Use the <a href="https://web.works/contact" rel="noopener">acquisition and partnership contact</a>.</li>
+    </ul>
+  </div>
+  <div class="panel panel-shadow">
+    <form class="form" data-form="contact" data-subject="Paradise.mx CONTACT - {topic} - {name}" data-ok="Thanks for getting in touch. We'll reply within two business days." novalidate>
+      <div class="row">
+        <div class="field"><label for="c-name">Name</label><input id="c-name" type="text" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" name="email" autocomplete="email" required></div>
+      </div>
+      <div class="field"><label for="c-topic">Topic</label><select id="c-topic" name="topic"><option>General question</option><option>Correction or update</option><option>Partnership or advertising</option><option>Press</option><option>Privacy request</option><option>Video or content removal</option><option>Something else</option></select></div>
+      <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required></textarea></div>
+      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-primary" type="submit">Send message</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

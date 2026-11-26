@@ -1,0 +1,50 @@
+{% extends "base.html.j2" %}
+{% set mcta = true %}
+{% block content %}
+<section class="dest-hero">
+  <div class="wrap">
+    <h1>The best time to visit Mexico, destination by destination</h1>
+    <p class="lede">Each cell is a Paradise score from 0 to 100 for that place in that month. Dark teal is excellent, pink means you'll likely trade comfort for price. The current month is outlined.</p>
+  </div>
+</section>
+<section class="band-tight">
+  <div class="wrap">
+    <div class="table-scroll">
+      <table class="matrix" id="matrix">
+        <thead><tr><th class="d">Destination</th>{% for m in MONTHS %}<th scope="col">{{ m }}</th>{% endfor %}</tr></thead>
+        <tbody>
+        {% for r in REGIONS %}
+          <tr class="r-group"><th colspan="13" scope="rowgroup">{{ REGION_LABEL[r] }}</th></tr>
+          {% for d in dests if d.region == r %}
+          <tr><th class="d" scope="row"><a href="{{ root }}destinations/{{ d.slug }}/">{{ d.name }}</a></th>
+            {% for s in d.scores %}{% set c = d.colors[loop.index0] %}<td data-m="{{ loop.index0 }}" style="background:{{ c[0] }};color:{{ c[1] }}" title="{{ d.name }}, {{ MONTHS_LONG[loop.index0] }}: {{ s }}">{{ s }}</td>{% endfor %}</tr>
+          {% endfor %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="small mt4">Legend: 85+ excellent, 75-84 very good, 65-74 good, 55-64 mixed, under 55 off-season.</p>
+  </div>
+</section>
+<div class="wrap"><div class="ad-wrap" data-ad></div></div>
+<section class="band band-agua">
+  <div class="wrap split">
+    <div class="prose">
+      <h2 style="margin-top:0">Reading the matrix</h2>
+      <p><b>Winter (December to April)</b> is prime time almost everywhere on the coast: dry, sunny and warm, with whales on the Pacific and calm, clear water in the Caribbean. It's also the most expensive and busiest period, especially around Christmas, New Year and Easter.</p>
+      <p><b>May and June</b> are hot and still mostly dry on the Pacific, while the Caribbean starts its sargassum and hurricane seasons. Baja and the Sea of Cortez shine as the water warms.</p>
+      <p><b>July to October</b> is the rainy season across most of Mexico. Expect short, heavy afternoon storms, lush green landscapes and the lowest prices. Hurricane risk peaks in September on both coasts, so flexible bookings and travel insurance matter.</p>
+      <p><b>November</b> is a sweet spot: the rains end, crowds haven't arrived and Day of the Dead fills the highland cities with colour.</p>
+      <p>For a deeper read, see <a href="{{ root }}guides/best-time-to-visit-mexico/">the month-by-month guide</a> or compare three places side by side with the <a href="{{ root }}tools/compare/">compare tool</a>.</p>
+    </div>
+    <div class="panel">
+      <h3>Best picks, month by month</h3>
+      <ul class="news">
+        {% for m in range(12) %}{% set top = (dests|selectattr('beachy')|sort(attribute='scores.' ~ m, reverse=true)|list)[:3] %}
+        <li><b>{{ MONTHS_LONG[m] }}</b><div class="src">{% for t in top %}<a href="{{ root }}destinations/{{ t.slug }}/">{{ t.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</div></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<section class="dest-hero"><div class="wrap">
+  <h1>Advertise, sponsor or partner with Paradise.mx</h1>
+  <p class="lede">Reach travellers at the moment they decide where and when to go in Mexico. Every sponsored placement is clearly labelled, and rankings are never for sale.</p>
+</div></section>
+<section class="band-tight"><div class="wrap">
+  <h2>Launch-partner packages</h2>
+  <p class="muted">Paradise.mx is a new publication. Early partners get launch pricing that's locked for 12 months.</p>
+  <div class="pkgs mt5">
+    <div class="pkg"><h3>Featured destination partner</h3><p class="price">from US$299/mo</p><ul class="tick"><li>Labelled "Featured partner" block on one destination page</li><li>Your photos, offer and link</li><li>One mention in the monthly email</li></ul></div>
+    <div class="pkg"><h3>Category sponsor</h3><p class="price">from US$499/mo</p><ul class="tick"><li>Weddings, Live in Mexico, diving, wellness or golf</li><li>Sponsor block on the category page and related guides</li><li>Quarterly performance report</li></ul></div>
+    <div class="pkg"><h3>Lead partner</h3><p class="price">per qualified lead</p><ul class="tick"><li>Receive trip, wedding or relocation requests that match your area</li><li>Only travellers who consented to be contacted</li><li>Volume caps and service standards</li></ul></div>
+    <div class="pkg"><h3>Newsletter sponsor</h3><p class="price">from US$149/issue</p><ul class="tick"><li>Single sponsor per monthly issue</li><li>Native, clearly labelled placement</li><li>Link tracking</li></ul></div>
+    <div class="pkg"><h3>Contest prize sponsor</h3><p class="price">in-kind or cash</p><ul class="tick"><li>Name the monthly Paradise Lens prize</li><li>Logo on the contest page for the round</li><li>Winner announcement mention</li></ul></div>
+    <div class="pkg"><h3>Custom partnership</h3><p class="price">let's talk</p><ul class="tick"><li>Tourism boards, airlines, insurers, travel brands</li><li>Data partnerships and co-branded tools</li><li>Video and content series</li></ul></div>
+  </div>
+  <p class="small mt5">Prices exclude any applicable taxes. All placements follow our editorial standards and Google publisher policies.</p>
+</div></section>
+<section class="band band-agua"><div class="wrap split">
+  <div class="prose">
+    <h2 style="margin-top:0">Who reads Paradise.mx</h2>
+    <p>Travellers from the United States, Canada and Europe who are actively choosing a Mexican destination and month, plus couples planning weddings and honeymoons and people exploring a move or a property purchase. That intent is what makes our audience valuable to hotels, tour operators, wedding planners, relocation specialists and travel brands.</p>
+    <h3>Our rules</h3>
+    <ul><li>Sponsored content is always labelled.</li><li>Paradise scores and rankings are never paid for.</li><li>We only accept partners we'd recommend to a friend.</li><li>We never sell personal data to marketers; lead partners receive only requests from people who opted in.</li></ul>
+    <p>Interested in acquiring this website or domain, or in a larger partnership? Use the contact link at the very top of any page.</p>
+  </div>
+  <div class="panel panel-shadow">
+    <h2 style="font-size:1.5rem">Partnership inquiry</h2>
+    <form class="form" data-form="advertise-inquiry" data-subject="Paradise.mx PARTNER inquiry - {package} - {company}" data-ok="Thanks. We'll reply with availability and a media kit within two business days." novalidate>
+      <div class="row">
+        <div class="field"><label for="a-name">Name</label><input id="a-name" type="text" name="name" required></div>
+        <div class="field"><label for="a-email">Work email</label><input id="a-email" type="email" name="email" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="a-co">Company</label><input id="a-co" type="text" name="company" required></div>
+        <div class="field"><label for="a-web">Website</label><input id="a-web" type="url" name="website" placeholder="https://"></div>
+      </div>
+      <div class="field"><label for="a-pkg">Interested in</label><select id="a-pkg" name="package"><option>Featured destination partner</option><option>Category sponsor</option><option>Lead partner</option><option>Newsletter sponsor</option><option>Contest prize sponsor</option><option>Custom partnership</option><option>Acquiring the website or domain</option></select></div>
+      <div class="field"><label for="a-budget">Monthly budget</label><select id="a-budget" name="budget"><option>Under US$500</option><option>US$500-2,000</option><option>US$2,000-5,000</option><option>US$5,000+</option></select></div>
+      <div class="field"><label for="a-msg">Message</label><textarea id="a-msg" name="message" required></textarea></div>
+      <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-primary" type="submit">Send inquiry</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}
