@@ -323,6 +323,7 @@ def cal_months():
 
 def build():
     env = Environment(loader=FileSystemLoader(str(TPL)), autoescape=select_autoescape(["html", "j2"]), trim_blocks=True, lstrip_blocks=True)
+    env.filters["ucfirst"] = lambda s: (s[:1].upper() + s[1:]) if s else s
     now = dt.datetime.now(dt.timezone.utc)
     common = {
         "MONTHS": MONTHS, "MONTHS_LONG": MONTHS_LONG, "REGIONS": REGIONS, "REGION_LABEL": REGION_LABEL, "VIBES": VIBES,

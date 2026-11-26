@@ -22,7 +22,7 @@
         <dl class="kv">
           <div><dt>State</dt><dd>{{ d.state }}</dd></div>
           <div><dt>Fly into</dt><dd>{{ d.airport }}, {{ d.transfer }}</dd></div>
-          <div><dt>Best months</dt><dd>{{ d.best_text|capitalize }}</dd></div>
+          <div><dt>Best months</dt><dd>{{ d.best_text|ucfirst }}</dd></div>
           <div><dt>Budget</dt><dd>{{ d.budget_str }}{% if d.pueblo %}, Pueblo Mágico{% endif %}</dd></div>
           <div><dt>{{ MONTHS_LONG[m] }} score</dt><dd>{{ d.scores[m] }} / 100</dd></div>
         </dl>
@@ -114,7 +114,7 @@
     <section class="mt6">
       <h2>Frequently asked</h2>
       <h3>When is the best time to visit {{ d.name }}?</h3>
-      <p>{{ d.best_text|capitalize }}. The least comfortable months are usually {{ d.worst_text }}.</p>
+      <p>{{ d.best_text|ucfirst }}. The least comfortable months are usually {{ d.worst_text }}.</p>
       <h3>Which airport is closest to {{ d.name }}?</h3>
       <p>{{ d.airportName }} ({{ d.airport }}), {{ d.transfer }} away.</p>
       <h3>Is {{ d.name }} good for {{ 'families' if 'family' in d.vibes else 'couples' if 'romance' in d.vibes else 'a first trip to Mexico' }}?</h3>
