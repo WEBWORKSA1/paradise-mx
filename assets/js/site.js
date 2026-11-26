@@ -438,7 +438,7 @@
       adventure: ["Closed-toe hiking shoes", "Insect repellent with DEET or picaridin", "Headlamp", "Quick-dry layers"],
       wedding: ["Formal outfit in breathable fabric", "Flat shoes for sand", "Steamer or wrinkle spray", "Copies of documents for the ceremony"],
       rain: ["Packable rain jacket", "Quick-dry clothes", "Zip bags for electronics"],
-      kids: ["Kids' swim vests", "Children's sunscreen and after-sun", "Snacks for transfers", "Child's passport and any consent letter required when travelling with one parent"]
+      kids: ["Kids' swim vests", "Children's sunscreen and after-sun", "Snacks for transfers", "Each child's passport and birth certificate (hotels now verify guardianship at check-in)", "Signed consent letter from any parent who isn't travelling"]
     };
     function renderPk() {
       var types = $$('input[name="pk-type"]:checked', pk).map(function (i) { return i.value; });
