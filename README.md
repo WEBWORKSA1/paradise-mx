@@ -32,7 +32,7 @@ python3 -m http.server 8000       # open http://localhost:8000/
 
 ## Launch checklist
 
-1. **Publish:** Settings → Pages → Build and deployment → Source: *Deploy from a branch* → Branch `main`, folder `/ (root)` → Save.
+1. **Publish from main:** Settings → Pages → Build and deployment → Source: *Deploy from a branch* → Branch `main`, folder `/ (root)` → Save. A `gh-pages` branch is kept as an identical mirror of `main` (the refresh workflow re-syncs it every run), so the site is live and current even before this switch.
 2. **Custom domain:** at the registrar for `paradise.mx`, set A records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` and a `www` CNAME to `webworksa1.github.io`. Then Settings → Pages → Custom domain `paradise.mx` → Save, and tick *Enforce HTTPS* once the certificate is issued. (Adding the domain in Settings creates the `CNAME` file automatically.)
 3. **Forms:** submit any form once on the live site. FormSubmit sends a one-time activation email to the inbox; click *Activate*. After that, every form delivers. Optionally replace the encoded address with FormSubmit's random alias later.
 4. **AdSense:** once the custom domain serves over HTTPS, add the site in AdSense, confirm `https://paradise.mx/ads.txt`, and enable Google's consent message for EEA/UK/Switzerland visitors (Privacy & messaging).
