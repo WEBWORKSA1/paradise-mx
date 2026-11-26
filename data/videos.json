@@ -2,21 +2,101 @@
   "updated": "26 November 2026",
   "_note": "Curated list. The refresh workflow appends recent uploads from channel feeds listed in data/video_channels.json (optional).",
   "items": [
-    {"id": "zbwo9izYCLM", "title": "Ultimate Cancún travel guide", "channel": null, "dest": "cancun"},
-    {"id": "1xvHKkfsmCY", "title": "Full Tulum travel guide 2026", "channel": null, "dest": "tulum"},
-    {"id": "v77cqVlFKGc", "title": "The complete Cabo San Lucas A-Z travel guide", "channel": null, "dest": "los-cabos"},
-    {"id": "kOpgngq6Ieo", "title": "48 hours in Puerto Vallarta: things to eat, see and do", "channel": null, "dest": "puerto-vallarta"},
-    {"id": "-xd1ukNsMXA", "title": "Exploring Bacalar, the lagoon of seven colours", "channel": null, "dest": "bacalar"},
-    {"id": "DVbGrx7LIP4", "title": "We tried every cenote in Tulum: the top 10", "channel": null, "dest": null},
-    {"id": "p5aQm-FV-Kg", "title": "Isla Mujeres travel guide", "channel": null, "dest": "isla-mujeres"},
-    {"id": "BGjrgCDJ33k", "title": "Bacalar and Holbox: must-visits in Mexico?", "channel": null, "dest": "holbox"},
-    {"id": "td3LON_dT8Y", "title": "Isla Mujeres, Cozumel and Holbox compared", "channel": null, "dest": "cozumel"},
-    {"id": "aW6Ca1vNeoU", "title": "Mexico City travel guide 2026", "channel": null, "dest": "mexico-city"},
-    {"id": "AdnvBmfEBy8", "title": "Oaxaca travel guide: city, ruins and coast", "channel": null, "dest": "oaxaca-city"},
-    {"id": "HMZ9VpFJ-mE", "title": "Mérida travel guide: food, museums and history", "channel": null, "dest": "merida"},
-    {"id": "GEj4hzt1vVc", "title": "San Miguel de Allende travel guide", "channel": null, "dest": "san-miguel-de-allende"},
-    {"id": "b7Acpc-mYW4", "title": "A travel guide to Sayulita", "channel": null, "dest": "sayulita"},
-    {"id": "TdbWe458_hA", "title": "Puerto Escondido or Huatulco?", "channel": null, "dest": "puerto-escondido"},
-    {"id": "a8sly3_fNeE", "title": "Cancún travel guide in 4K", "channel": null, "dest": null}
+    {
+      "id": "zbwo9izYCLM",
+      "title": "Ultimate Cancún travel guide",
+      "channel": null,
+      "dest": "cancun"
+    },
+    {
+      "id": "1xvHKkfsmCY",
+      "title": "Full Tulum travel guide 2026",
+      "channel": null,
+      "dest": "tulum"
+    },
+    {
+      "id": "v77cqVlFKGc",
+      "title": "The complete Cabo San Lucas A-Z travel guide",
+      "channel": null,
+      "dest": "los-cabos"
+    },
+    {
+      "id": "kOpgngq6Ieo",
+      "title": "48 hours in Puerto Vallarta: things to eat, see and do",
+      "channel": null,
+      "dest": "puerto-vallarta"
+    },
+    {
+      "id": "-xd1ukNsMXA",
+      "title": "Exploring Bacalar, the lagoon of seven colours",
+      "channel": null,
+      "dest": "bacalar"
+    },
+    {
+      "id": "DVbGrx7LIP4",
+      "title": "We tried every cenote in Tulum: the top 10",
+      "channel": null,
+      "dest": null
+    },
+    {
+      "id": "p5aQm-FV-Kg",
+      "title": "Isla Mujeres travel guide",
+      "channel": null,
+      "dest": "isla-mujeres"
+    },
+    {
+      "id": "BGjrgCDJ33k",
+      "title": "Bacalar and Holbox: must-visits in Mexico?",
+      "channel": null,
+      "dest": "holbox"
+    },
+    {
+      "id": "td3LON_dT8Y",
+      "title": "Isla Mujeres, Cozumel and Holbox compared",
+      "channel": null,
+      "dest": "cozumel"
+    },
+    {
+      "id": "aW6Ca1vNeoU",
+      "title": "Mexico City travel guide 2026",
+      "channel": null,
+      "dest": "mexico-city"
+    },
+    {
+      "id": "AdnvBmfEBy8",
+      "title": "Oaxaca travel guide: city, ruins and coast",
+      "channel": null,
+      "dest": "oaxaca-city"
+    },
+    {
+      "id": "HMZ9VpFJ-mE",
+      "title": "Mérida travel guide: food, museums and history",
+      "channel": null,
+      "dest": "merida"
+    },
+    {
+      "id": "GEj4hzt1vVc",
+      "title": "San Miguel de Allende travel guide",
+      "channel": null,
+      "dest": "san-miguel-de-allende"
+    },
+    {
+      "id": "b7Acpc-mYW4",
+      "title": "A travel guide to Sayulita",
+      "channel": null,
+      "dest": "sayulita"
+    },
+    {
+      "id": "TdbWe458_hA",
+      "title": "Puerto Escondido or Huatulco?",
+      "channel": null,
+      "dest": "puerto-escondido"
+    },
+    {
+      "id": "a8sly3_fNeE",
+      "title": "Cancún travel guide in 4K",
+      "channel": null,
+      "dest": null
+    }
   ]
 }
